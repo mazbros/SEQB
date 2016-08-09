@@ -23,28 +23,55 @@ namespace SEQB
                 var oauthValidator = new OAuthRequestValidator(_appToken,_accessTokenSecret,_consumerKey,_consumerSecret);
                 var context = new ServiceContext(_appToken, IntuitServicesType.QBD, oauthValidator);
                 var conn = new DataService(context);
+
                 var invoice = new Invoice
                 {
+                    Id = "1",
                     Deposit = 0,
                     DueDate = DateTime.Now.AddMonths(1),
-                    Balance = (decimal)100.50D,
+
                     BillAddr = new PhysicalAddress
                     {
-                        Line1 = "123 Some Str",
-                        City = "City",
-                        CountrySubDivisionCode = "NJ",
-                        PostalCode = "00000",
-                        Country = "USA"
+                        Id = "1",
+                        Line1 = "Russ Sonnenschein",
+                        Line2 = "Sonnenschein Family Store",
+                        Line3 = "5647 Cypress Hill Ave.",
+                        Line4 = "Middlefield, CA  94303"
                     },
-                    Line = new Line[] { }
+
+                    ShipAddr = new PhysicalAddress
+                    {
+                        Id = "1",
+                        Line1 = "5647 Cypress Hill Ave.",
+                        City = "Middlefield",
+                        CountrySubDivisionCode = "CA",
+                        PostalCode = "94303"
+                    },
+
+                    SalesTermRef = new ReferenceType
+                    {
+                        Value = "3"
+                    },
+
+                    TotalAmt = 362.07M,
+                    ApplyTaxAfterDiscount = false,
+                    PrintStatus = PrintStatusEnum.NotSet,
+                    EmailStatus = EmailStatusEnum.NotSet,
+
+                    BillEmail = new EmailAddress
+                    {
+                        Address = "amazure@wdsystems.com"
+                    },
+
+                    Balance = 362.07M,
                 };
+                
 
                 conn.Add(invoice);
 
             }
             catch (Exception ex)
             {
-                //
                 MessageBox.Show(ex.Message);
             }
         }
