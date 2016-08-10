@@ -24,12 +24,49 @@ namespace SEQB
                 var context = new ServiceContext(_appToken, IntuitServicesType.QBD, oauthValidator);
                 var conn = new DataService(context);
 
+                var invoiceItemLine = new Line
+                {
+                    Id = "1",
+                    Description = "Description",
+                    Amount = 10m,
+                    AmountSpecified = true,
+                    DetailType = LineDetailTypeEnum.ItemReceiptLineDetail,
+                    DetailTypeSpecified = true,
+                    AnyIntuitObject = 456.78m,
+                    LineNum = "1",
+
+                };
+
+                var lineDetail = new SalesItemLineDetail
+                {
+                    ServiceDate = DateTime.Now,
+                    AnyIntuitObject = 10m,
+                    ItemElementName = ItemChoiceType.UnitPrice,
+                    Qty = 10,
+                    QtySpecified = true,
+                    TaxCodeRef = new ReferenceType()
+                    {
+                        Value = "TAX"
+                    },
+                    TaxInclusiveAmt = 1.25m,
+                    TaxInclusiveAmtSpecified = true
+                };
+                
+                invoiceItemLine.AnyIntuitObject = lineDetail;
+
                 var invoice = new Invoice
                 {
                     Id = "1",
                     Deposit = 0,
                     DueDate = DateTime.Now.AddMonths(1),
-
+                    domain = idDomainEnum.QBSDK.ToString(),
+                    sparse = false,
+                    SyncToken = "0",
+                    MetaData = new ModificationMetaData
+                    {
+                        CreateTime = DateTime.Now,
+                        LastUpdatedTime = DateTime.Now
+                    },
                     BillAddr = new PhysicalAddress
                     {
                         Id = "1",
@@ -38,7 +75,6 @@ namespace SEQB
                         Line3 = "5647 Cypress Hill Ave.",
                         Line4 = "Middlefield, CA  94303"
                     },
-
                     ShipAddr = new PhysicalAddress
                     {
                         Id = "1",
@@ -47,25 +83,22 @@ namespace SEQB
                         CountrySubDivisionCode = "CA",
                         PostalCode = "94303"
                     },
-
                     SalesTermRef = new ReferenceType
                     {
                         Value = "3"
                     },
-
                     TotalAmt = 362.07M,
                     ApplyTaxAfterDiscount = false,
                     PrintStatus = PrintStatusEnum.NotSet,
                     EmailStatus = EmailStatusEnum.NotSet,
-
                     BillEmail = new EmailAddress
                     {
                         Address = "amazure@wdsystems.com"
                     },
-
                     Balance = 362.07M,
+                    Line = new[] {invoiceItemLine}
                 };
-                
+
 
                 conn.Add(invoice);
 
