@@ -117,4 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA
+        AADb3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf
+        4P////8A29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf
+        4P/b3+D/////ANvf4P/b3+D/unIQ/9vf4P+6chD/29/g/zq/ov/b3+D/Or+i/9vf4P86v6L/29/g/6uo
+        pv/b3+D/29/g/////wDb3+D/29/g/7pyEP/b3+D/unIQ/9vf4P86v6L/29/g/zq/ov/b3+D/Or+i/9vf
+        4P+rqKb/29/g/9vf4P////8A29/g/9vf4P+6chD/29/g/7pyEP/b3+D/Or+i/9vf4P86v6L/29/g/zq/
+        ov/b3+D/q6im/9vf4P/b3+D/////ANvf4P/b3+D/unIQ/9vf4P+6chD/29/g/zq/ov/b3+D/Or+i/9vf
+        4P86v6L/29/g/6uopv/b3+D/29/g/////wDb3+D/29/g/7pyEP/b3+D/unIQ/9vf4P86v6L/29/g/zq/
+        ov/b3+D/Or+i/9vf4P+rqKb/29/g/9vf4P////8A29/g/9vf4P+6chD/29/g/7pyEP/b3+D/Or+i/9vf
+        4P86v6L/29/g/zq/ov/b3+D/29/g/9vf4P/b3+D/////ANvf4P/b3+D/unIQ/9vf4P+6chD/29/g/zq/
+        ov/b3+D/Or+i/9vf4P86v6L/29/g/9vf4P/b3+D/29/g/////wDb3+D/29/g/7pyEP/b3+D/unIQ/9vf
+        4P86v6L/29/g/zq/ov/b3+D/Or+i/9vf4P+rqKb/29/g/9vf4P////8A29/g/9vf4P+6chD/29/g/7py
+        EP/b3+D/Or+i/9vf4P86v6L/29/g/zq/ov/b3+D/q6im/9vf4P/b3+D/////ANvf4P/b3+D/unIQ/9vf
+        4P+6chD/29/g/zq/ov/b3+D/Or+i/9vf4P86v6L/29/g/6uopv/b3+D/29/g/////wDb3+D/29/g/7py
+        EP/b3+D/unIQ/9vf4P86v6L/29/g/zq/ov/b3+D/Or+i/9vf4P+rqKb/29/g/9vf4P////8A29/g/9vf
+        4P+6chD/29/g/7pyEP/b3+D/Or+i/9vf4P86v6L/29/g/zq/ov/b3+D/q6im/9vf4P/b3+D/////ANvf
+        4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g////
+        /wDb3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf4P/b3+D/29/g/9vf
+        4P////8AAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAABAAAAAQAAAAEAAAAB
+        AAAAAQAAAAEAAA==
+</value>
+  </data>
 </root>
