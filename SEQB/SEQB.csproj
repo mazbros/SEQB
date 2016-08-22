@@ -149,6 +149,17 @@
   <ItemGroup>
     <Content Include="Resources\favicon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="QBFC13Lib">
+      <Guid>{0CB030A6-7B72-42CE-B92A-849B4A4A2CFB}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
