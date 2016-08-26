@@ -36,6 +36,8 @@ namespace SEQB
             this.lblFamilyGroup = new System.Windows.Forms.Label();
             this.btnViewInventories = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblPlant = new System.Windows.Forms.Label();
+            this.cbPlant = new System.Windows.Forms.ComboBox();
             this.lblAmountTitle = new System.Windows.Forms.Label();
             this.lblTaxTitle = new System.Windows.Forms.Label();
             this.lblQtyTitle = new System.Windows.Forms.Label();
@@ -57,16 +59,14 @@ namespace SEQB
             this.Tax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Amount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dummy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbPlant = new System.Windows.Forms.ComboBox();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbFamilyGroup
             // 
             this.cbFamilyGroup.FormattingEnabled = true;
-            this.cbFamilyGroup.Location = new System.Drawing.Point(298, 42);
+            this.cbFamilyGroup.Location = new System.Drawing.Point(305, 42);
             this.cbFamilyGroup.Margin = new System.Windows.Forms.Padding(4);
             this.cbFamilyGroup.Name = "cbFamilyGroup";
             this.cbFamilyGroup.Size = new System.Drawing.Size(209, 25);
@@ -77,7 +77,7 @@ namespace SEQB
             // 
             this.lblFamilyGroup.AutoSize = true;
             this.lblFamilyGroup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFamilyGroup.Location = new System.Drawing.Point(199, 46);
+            this.lblFamilyGroup.Location = new System.Drawing.Point(206, 46);
             this.lblFamilyGroup.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFamilyGroup.Name = "lblFamilyGroup";
             this.lblFamilyGroup.Size = new System.Drawing.Size(88, 17);
@@ -92,7 +92,7 @@ namespace SEQB
             this.btnViewInventories.Name = "btnViewInventories";
             this.btnViewInventories.Size = new System.Drawing.Size(129, 28);
             this.btnViewInventories.TabIndex = 2;
-            this.btnViewInventories.Text = "View Inventories";
+            this.btnViewInventories.Text = "Refresh View";
             this.btnViewInventories.UseVisualStyleBackColor = true;
             this.btnViewInventories.Click += new System.EventHandler(this.btnViewInventories_Click);
             // 
@@ -101,7 +101,7 @@ namespace SEQB
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.lblPlant);
             this.groupBox1.Controls.Add(this.cbPlant);
             this.groupBox1.Controls.Add(this.lblAmountTitle);
             this.groupBox1.Controls.Add(this.lblTaxTitle);
@@ -126,6 +126,27 @@ namespace SEQB
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "View shipped inventories";
+            // 
+            // lblPlant
+            // 
+            this.lblPlant.AutoSize = true;
+            this.lblPlant.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblPlant.Location = new System.Drawing.Point(24, 46);
+            this.lblPlant.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPlant.Name = "lblPlant";
+            this.lblPlant.Size = new System.Drawing.Size(38, 17);
+            this.lblPlant.TabIndex = 15;
+            this.lblPlant.Text = "Plant";
+            // 
+            // cbPlant
+            // 
+            this.cbPlant.FormattingEnabled = true;
+            this.cbPlant.Location = new System.Drawing.Point(68, 42);
+            this.cbPlant.Margin = new System.Windows.Forms.Padding(4);
+            this.cbPlant.Name = "cbPlant";
+            this.cbPlant.Size = new System.Drawing.Size(109, 25);
+            this.cbPlant.TabIndex = 14;
+            this.cbPlant.SelectedIndexChanged += new System.EventHandler(this.cbPlant_SelectedIndexChanged);
             // 
             // lblAmountTitle
             // 
@@ -308,46 +329,25 @@ namespace SEQB
             // 
             this.Dummy.Text = "";
             // 
-            // label1
+            // lblTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.Control;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.ForeColor = System.Drawing.Color.DarkGray;
-            this.label1.Location = new System.Drawing.Point(32, 20);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(539, 53);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "QuickBooks integration";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(24, 46);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 17);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Plant";
-            // 
-            // cbPlant
-            // 
-            this.cbPlant.FormattingEnabled = true;
-            this.cbPlant.Location = new System.Drawing.Point(68, 42);
-            this.cbPlant.Margin = new System.Windows.Forms.Padding(4);
-            this.cbPlant.Name = "cbPlant";
-            this.cbPlant.Size = new System.Drawing.Size(109, 25);
-            this.cbPlant.TabIndex = 14;
-            this.cbPlant.SelectedIndexChanged += new System.EventHandler(this.cbPlant_SelectedIndexChanged);
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTitle.Font = new System.Drawing.Font("Tahoma", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTitle.ForeColor = System.Drawing.Color.DarkGray;
+            this.lblTitle.Location = new System.Drawing.Point(32, 20);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(539, 53);
+            this.lblTitle.TabIndex = 4;
+            this.lblTitle.Text = "QuickBooks integration";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1227, 573);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -358,11 +358,11 @@ namespace SEQB
             this.ResizeBegin += new System.EventHandler(this.MainForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+            this.FormClosing += new FormClosingEventHandler(this.MainForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.FormClosing += MainForm_FormClosing;
 
         }
 
@@ -373,7 +373,7 @@ namespace SEQB
         private System.Windows.Forms.Label lblFamilyGroup;
         private System.Windows.Forms.Button btnViewInventories;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnCreateInvoice;
         private System.Windows.Forms.ListView lvInventories;
         private System.Windows.Forms.Label lblDate;
@@ -395,7 +395,7 @@ namespace SEQB
         private Label lblTax;
         private Label lblAmount;
         private Label lblTotal;
-        private Label label2;
+        private Label lblPlant;
         private ComboBox cbPlant;
     }
 }

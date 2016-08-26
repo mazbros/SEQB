@@ -53,7 +53,6 @@ namespace SEQB
                 cbFamilyGroup.ValueMember = "FamilyGroup";
                 cbFamilyGroup.DisplayMember = "FamilyGroup";
             }
-                
         }
 
         private void FilllvInventories()
@@ -139,6 +138,7 @@ namespace SEQB
             lvInventories.Columns.AddRange(new[] { LineNum, Id, PartNumber, FamilyGroup, Description, Qty, UnitPrice, Tax, Amount, Dummy });
             SizeLastColumn(lvInventories);
         }
+
         private void SizeLastColumn(ListView lv)
         {
             if(lv.Columns.Count > 0)
@@ -151,10 +151,10 @@ namespace SEQB
 
         private void QBFC_AddInvoice()
         {
+            //TODO: make sure this is correct and doesn't need to be a selection from list
             var custFN = "GAF MC Access & Low Slope";
-            var invoiceNumber = "99999";
 
-            invoiceNumber = GetNextInvoiceNumber();
+            var invoiceNumber = GetNextInvoiceNumber();
 
             var billTo = GetBillTo(custFN);
 
@@ -170,7 +170,7 @@ namespace SEQB
                 try
                 {
                     // Add the request to the message set request object
-                    IInvoiceAdd invoiceAdd = requestMsgSet.AppendInvoiceAddRq();
+                    var invoiceAdd = requestMsgSet.AppendInvoiceAddRq();
 
                     // Set the IInvoiceAdd field values
                     // Customer:Job
@@ -214,7 +214,7 @@ namespace SEQB
                     {
                         var row = _dt.Rows[i];
                         // Create the line item for the invoice
-                        IInvoiceLineAdd invoiceLineAdd = invoiceAdd.ORInvoiceLineAddList.Append().InvoiceLineAdd;
+                        var invoiceLineAdd = invoiceAdd.ORInvoiceLineAddList.Append().InvoiceLineAdd;
                         invoiceLineAdd.ItemRef.FullName.SetValue(row["Description"].ToString());
                         invoiceLineAdd.Quantity.SetValue(Convert.ToDouble(row["Qty"].ToString(), CultureInfo.InvariantCulture));
                         invoiceLineAdd.SalesTaxCodeRef.FullName.SetValue(row["TaxRef"].ToString()
@@ -253,7 +253,7 @@ namespace SEQB
                     QBHelper.EnableErrorRecovery(qbSessionManager);
 
                     // Add the request to the message set request object
-                    ICustomerQuery custQ = requestMsgSet.AppendCustomerQueryRq();
+                    var custQ = requestMsgSet.AppendCustomerQueryRq();
 
                     /* Following VB example is taken from QBFC/DevGuide/pg100
                     Example 3
@@ -269,7 +269,7 @@ namespace SEQB
 
 
                     // Do the request and get the response message set object
-                    IMsgSetResponse responseSet = qbSessionManager.DoRequests(requestMsgSet);
+                    var responseSet = qbSessionManager.DoRequests(requestMsgSet);
 
                     // Uncomment the following to view and save the request and response XML
                     // string requestXML = requestSet.ToXMLString();
@@ -279,17 +279,17 @@ namespace SEQB
                     // MessageBox.Show(responseXML);
                     // SaveXML(responseXML);
 
-                    IResponse response = responseSet.ResponseList.GetAt(0);
+                    var response = responseSet.ResponseList.GetAt(0);
                     // int statusCode = response.StatusCode;
                     // string statusMessage = response.StatusMessage;
                     // string statusSeverity = response.StatusSeverity;
                     // MessageBox.Show("Status:\nCode = " + statusCode + "\nMessage = " + statusMessage + "\nSeverity = " + statusSeverity);
 
 
-                    ICustomerRetList customerRetList = response.Detail as ICustomerRetList;
+                    var customerRetList = response.Detail as ICustomerRetList;
                     if (customerRetList != null && customerRetList.Count != 0)
                     {
-                        ICustomerRet customerRet = customerRetList.GetAt(0);
+                        var customerRet = customerRetList.GetAt(0);
                         if (customerRet.BillAddress != null)
                         {
                             ret = new BillAddress
@@ -341,7 +341,7 @@ namespace SEQB
 
         private string GetNextInvoiceNumber()
         {
-            var ReturnVal = string.Empty;
+            var returnVal = string.Empty;
             using (var sessionManager = SessionManager.GetInstance)
             {
                 var qbSessionManager = sessionManager.OpenSession();
@@ -357,17 +357,73 @@ namespace SEQB
                 invoiceQuery.IncludeLineItems.SetValue(false);
                 invoiceQuery.IncludeLinkedTxns.SetValue(false);
 
-                IMsgSetResponse responseMsgSet = qbSessionManager.DoRequests(requestMsgSet);
-                IResponse response = responseMsgSet.ResponseList.GetAt(0);
-                IInvoiceRetList invoiceRetList = (IInvoiceRetList)response.Detail;
+                var responseMsgSet = qbSessionManager.DoRequests(requestMsgSet);
+                var response = responseMsgSet.ResponseList.GetAt(0);
+                var invoiceRetList = (IInvoiceRetList)response.Detail;
 
                 if (invoiceRetList != null)
                 {
-                    IInvoiceRet invoiceRet = invoiceRetList.GetAt(invoiceRetList.Count - 1);
-                    ReturnVal = (int.Parse(invoiceRet.RefNumber.GetValue()) + 1).ToString();
+                    var invoiceRet = invoiceRetList.GetAt(invoiceRetList.Count - 1);
+                    returnVal = (int.Parse(invoiceRet.RefNumber.GetValue()) + 1).ToString();
                 }
 
-                return ReturnVal;
+                return returnVal;
+            }
+        }
+
+        public static bool DeleteInvoiceByNumber(string refNum)
+        {
+            var returnVal = false;
+            var trxId = string.Empty;
+
+            using (var sessionManager = SessionManager.GetInstance)
+            {
+                var qbSessionManager = sessionManager.OpenSession();
+                // Get the RequestMsgSet based on the correct QB Version
+                var requestMsgSet = QBHelper.GetLatestMsgSetRequest(qbSessionManager);
+                // Initialize the message set request object
+                requestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
+                QBHelper.EnableErrorRecovery(qbSessionManager);
+
+                var invoiceQuery = requestMsgSet.AppendInvoiceQueryRq();
+                invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORRefNumberFilter.RefNumberFilter.MatchCriterion.SetValue(ENMatchCriterion.mcContains);
+                invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORRefNumberFilter.RefNumberFilter.RefNumber.SetValue(refNum);
+                invoiceQuery.IncludeLineItems.SetValue(false);
+                invoiceQuery.IncludeLinkedTxns.SetValue(false);
+                
+                var responseMsgSet = qbSessionManager.DoRequests(requestMsgSet);
+                var response = responseMsgSet.ResponseList.GetAt(0);
+                var invoiceRetList = (IInvoiceRetList)response.Detail;
+
+                if (invoiceRetList != null)
+                {
+                    var invoiceRet = invoiceRetList.GetAt(0);
+                    trxId = invoiceRet.TxnID.GetValue();
+                }
+
+                if (trxId != null)
+                {
+                    var invoiceDel = requestMsgSet.AppendTxnDelRq();
+                    invoiceDel.TxnDelType.SetValue(ENTxnDelType.tdtInvoice);
+                    invoiceDel.TxnID.SetValue(trxId);
+
+                    QBHelper.EnableErrorRecovery(qbSessionManager);
+                    requestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
+                    responseMsgSet = qbSessionManager.DoRequests(requestMsgSet);
+                    response = responseMsgSet.ResponseList.GetAt(0);
+                }
+
+
+                if (response.StatusCode != 0)
+                {
+                    MessageBox.Show(response.StatusMessage);
+                }
+                else
+                {
+                    MessageBox.Show(@"Invoice #" + refNum + @" was succesfully deleted.");
+                    returnVal = true;
+                }
+                return returnVal;
             }
         }
 
