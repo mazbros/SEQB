@@ -212,7 +212,7 @@ namespace SEQB
             return LastVers;
         }
 
-        public static void ShowRequestResult(QBSessionManager sessionManager, IMsgSetRequest requestMsgSet)
+        public static bool ShowRequestResult(QBSessionManager sessionManager, IMsgSetRequest requestMsgSet)
         {
             IMsgSetResponse responseMsgSet;
             responseMsgSet = sessionManager.DoRequests(requestMsgSet);
@@ -314,6 +314,7 @@ namespace SEQB
                 }
                 RaiseEvent(resString);
             } // if statusCode is zero
+            return statusCode == 0;
         }
     }
 

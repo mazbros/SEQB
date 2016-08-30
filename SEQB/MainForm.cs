@@ -15,6 +15,7 @@ namespace SEQB
         private int _totalQty;
         private double _totalTax;
         private double _totalAmount;
+        private string _pkgIdsForUpdate;
 
         private DataTable _dt;
 
@@ -28,6 +29,7 @@ namespace SEQB
             FillcbPlant();
 
             FillcbFamilyGroup();
+
         }
 
         private void FillcbPlant()
@@ -73,9 +75,11 @@ namespace SEQB
                 cmd.Parameters.Add(new SqlParameter("@TQty", DbType.Int16));
                 cmd.Parameters.Add(new SqlParameter("@TTax", SqlDbType.VarChar, 16));
                 cmd.Parameters.Add(new SqlParameter("@TAmount", SqlDbType.VarChar, 16));
+                cmd.Parameters.Add(new SqlParameter("@TIds", SqlDbType.NVarChar, -1));
                 cmd.Parameters["@TQty"].Direction = ParameterDirection.Output;
                 cmd.Parameters["@TTax"].Direction = ParameterDirection.Output;
                 cmd.Parameters["@TAmount"].Direction = ParameterDirection.Output;
+                cmd.Parameters["@TIds"].Direction = ParameterDirection.Output;
                 _dt = new DataTable();
                 new SqlDataAdapter(cmd).Fill(_dt);
 
@@ -100,6 +104,7 @@ namespace SEQB
                 _totalQty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.InvariantCulture);
                 _totalTax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.InvariantCulture);
                 _totalAmount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.InvariantCulture);
+                _pkgIdsForUpdate = cmd.Parameters["@TIds"].Value.ToString();
 
                 lblQty.Text = _totalQty.ToString();
                 lblTax.Text = _totalTax.ToString("C2", CultureInfo.CurrentCulture);
@@ -109,11 +114,6 @@ namespace SEQB
             SizeLastColumn(lvInventories);
 
             btnCreateInvoice.Enabled = lvInventories.Items.Count > 0;
-        }
-
-        private void btnViewInventories_Click(object sender, EventArgs e)
-        {
-            FilllvInventories();
         }
 
         private void cbFamilyGroup_SelectedIndexChanged(object sender, EventArgs e)
@@ -132,6 +132,11 @@ namespace SEQB
             FilllvInventories();
         }
 
+        private void btnViewInventories_Click(object sender, EventArgs e)
+        {
+            FilllvInventories();
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             lvInventories.View = View.Details;
@@ -144,6 +149,7 @@ namespace SEQB
             if(lv.Columns.Count > 0)
                 lv.Columns[lv.Columns.Count - 1].Width = -2;
         }
+        
         private void btnCreateInvoice_Click(object sender, EventArgs e)
         {
             QBFC_AddInvoice();
@@ -227,12 +233,14 @@ namespace SEQB
                     invoiceAdd.ItemSalesTaxRef.FullName.SetValue(cbPlant.Text + " Sales Tax");
                     invoiceAdd.ClassRef.FullName.SetValue(cbPlant.Text);
 
-                    QBHelper.ShowRequestResult(qbSessionManager, requestMsgSet);
+                    if(QBHelper.ShowRequestResult(qbSessionManager, requestMsgSet))
+                        UpdatePackagesInvoiceCreated(invoiceNumber, _pkgIdsForUpdate);
+
                     qbSessionManager.ClearErrorRecovery();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + @"\nStack Trace: \n" + ex.StackTrace + @"\nExiting the application");
+                    MessageBox.Show(ex.Message + "\n" + @"Stack Trace: " + "\n" + ex.StackTrace + "\n" + @"Exiting the application");
                 }
             }
         } // method QBFC_AddInvoice
@@ -366,8 +374,44 @@ namespace SEQB
                     var invoiceRet = invoiceRetList.GetAt(invoiceRetList.Count - 1);
                     returnVal = (int.Parse(invoiceRet.RefNumber.GetValue()) + 1).ToString();
                 }
+            }
+            return returnVal;
+        }
 
-                return returnVal;
+        public static void DeleteInvoiceAndUpdatePackages(string refNum)
+        {
+            if (!DeleteInvoiceByNumber(refNum)) return;
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["db"].ConnectionString))
+            {
+                try
+                {
+                    if (conn.State != ConnectionState.Open)
+                        conn.Open();
+                    var cmd = new SqlCommand("UpdatePackageTrackInvoiceDeleted", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.Add(new SqlParameter("@invoiceNum", refNum));
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n" + @"Stack trace: " + "\n" + ex.StackTrace);
+                }
+            }
+        }
+
+        private static void UpdatePackagesInvoiceCreated(string refNum, string pkgIds)
+        {
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["db"].ConnectionString))
+            {
+                conn.Open();
+                var cmd = new SqlCommand($@"
+                    update PackageTrack
+                    set invoice = '{refNum}'
+                    where Id in ('{pkgIds.Replace(",", "','")}')
+                    ", conn);
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -423,8 +467,8 @@ namespace SEQB
                     MessageBox.Show(@"Invoice #" + refNum + @" was succesfully deleted.");
                     returnVal = true;
                 }
-                return returnVal;
             }
+            return returnVal;
         }
 
     }

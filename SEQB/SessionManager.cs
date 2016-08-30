@@ -1,5 +1,6 @@
 ﻿using QBFC13Lib;
 using System;
+using System.Configuration;
 
 namespace SEQB
 {
@@ -9,6 +10,7 @@ namespace SEQB
         private static SessionManager _instance;
         private QBSessionManager _qbSessionManager;
         private bool _booSessionBegun;
+        private static string QBFile;
 
         private SessionManager()
         {
@@ -41,8 +43,10 @@ namespace SEQB
             if (_booSessionBegun)
                 return null;
 
-            _qbSessionManager.OpenConnection("", "Sample Express");
-            _qbSessionManager.BeginSession("", ENOpenMode.omDontCare);
+            QBFile = ConfigurationManager.AppSettings["QBFile"];
+
+            _qbSessionManager.OpenConnection("SEQB", "Sample Express QuickBooks Integration");
+            _qbSessionManager.BeginSession(QBFile, ENOpenMode.omDontCare);
             _booSessionBegun = true;
             return _qbSessionManager;
         }

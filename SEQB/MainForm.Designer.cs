@@ -94,7 +94,7 @@ namespace SEQB
             this.btnViewInventories.TabIndex = 2;
             this.btnViewInventories.Text = "Refresh View";
             this.btnViewInventories.UseVisualStyleBackColor = true;
-            this.btnViewInventories.Click += new System.EventHandler(this.btnViewInventories_Click);
+            this.btnViewInventories.Click += new EventHandler(btnViewInventories_Click);
             // 
             // groupBox1
             // 

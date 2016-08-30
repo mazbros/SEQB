@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SEQB;
 
-namespace SEQB.Tests
+namespace SEQBTests
 {
     [TestClass()]
     public class MainFormTests
@@ -8,10 +9,14 @@ namespace SEQB.Tests
         [TestMethod()]
         public void DeleteInvoiceByNumberTest()
         {
-            
             var result = MainForm.DeleteInvoiceByNumber("3462");
-
             Assert.IsTrue(result);
+        }
+
+        [TestMethod()]
+        public void DeleteInvoiceAndUpdatePackages()
+        {
+            MainForm.DeleteInvoiceAndUpdatePackages("3462");
         }
     }
 }
