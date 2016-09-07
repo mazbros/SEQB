@@ -32,23 +32,6 @@ namespace SEQB
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.cbFamilyGroup = new System.Windows.Forms.ComboBox();
-            this.lblFamilyGroup = new System.Windows.Forms.Label();
-            this.btnViewInventories = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblPlant = new System.Windows.Forms.Label();
-            this.cbPlant = new System.Windows.Forms.ComboBox();
-            this.lblAmountTitle = new System.Windows.Forms.Label();
-            this.lblTaxTitle = new System.Windows.Forms.Label();
-            this.lblQtyTitle = new System.Windows.Forms.Label();
-            this.lblQty = new System.Windows.Forms.Label();
-            this.lblTax = new System.Windows.Forms.Label();
-            this.lblAmount = new System.Windows.Forms.Label();
-            this.lblTotal = new System.Windows.Forms.Label();
-            this.lvInventories = new System.Windows.Forms.ListView();
-            this.dtDate = new System.Windows.Forms.DateTimePicker();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.btnCreateInvoice = new System.Windows.Forms.Button();
             this.LineNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PartNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -60,219 +43,30 @@ namespace SEQB
             this.Amount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dummy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblTitle = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbFamilyGroup = new System.Windows.Forms.ComboBox();
+            this.btnViewInventories = new System.Windows.Forms.Button();
+            this.lblFamilyGroup = new System.Windows.Forms.Label();
+            this.btnCreateInvoice = new System.Windows.Forms.Button();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.dtDate = new System.Windows.Forms.DateTimePicker();
+            this.lvInventories = new System.Windows.Forms.ListView();
+            this.lblTotal = new System.Windows.Forms.Label();
+            this.lblAmount = new System.Windows.Forms.Label();
+            this.lblTax = new System.Windows.Forms.Label();
+            this.lblQty = new System.Windows.Forms.Label();
+            this.lblQtyTitle = new System.Windows.Forms.Label();
+            this.lblTaxTitle = new System.Windows.Forms.Label();
+            this.lblAmountTitle = new System.Windows.Forms.Label();
+            this.cbPlant = new System.Windows.Forms.ComboBox();
+            this.lblPlant = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // cbFamilyGroup
-            // 
-            this.cbFamilyGroup.FormattingEnabled = true;
-            this.cbFamilyGroup.Location = new System.Drawing.Point(305, 42);
-            this.cbFamilyGroup.Margin = new System.Windows.Forms.Padding(4);
-            this.cbFamilyGroup.Name = "cbFamilyGroup";
-            this.cbFamilyGroup.Size = new System.Drawing.Size(209, 25);
-            this.cbFamilyGroup.TabIndex = 0;
-            this.cbFamilyGroup.SelectedIndexChanged += new System.EventHandler(this.cbFamilyGroup_SelectedIndexChanged);
-            // 
-            // lblFamilyGroup
-            // 
-            this.lblFamilyGroup.AutoSize = true;
-            this.lblFamilyGroup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFamilyGroup.Location = new System.Drawing.Point(206, 46);
-            this.lblFamilyGroup.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFamilyGroup.Name = "lblFamilyGroup";
-            this.lblFamilyGroup.Size = new System.Drawing.Size(88, 17);
-            this.lblFamilyGroup.TabIndex = 1;
-            this.lblFamilyGroup.Text = "Family Group";
-            // 
-            // btnViewInventories
-            // 
-            this.btnViewInventories.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnViewInventories.Location = new System.Drawing.Point(824, 40);
-            this.btnViewInventories.Margin = new System.Windows.Forms.Padding(4);
-            this.btnViewInventories.Name = "btnViewInventories";
-            this.btnViewInventories.Size = new System.Drawing.Size(129, 28);
-            this.btnViewInventories.TabIndex = 2;
-            this.btnViewInventories.Text = "Refresh View";
-            this.btnViewInventories.UseVisualStyleBackColor = true;
-            this.btnViewInventories.Click += new EventHandler(btnViewInventories_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.lblPlant);
-            this.groupBox1.Controls.Add(this.cbPlant);
-            this.groupBox1.Controls.Add(this.lblAmountTitle);
-            this.groupBox1.Controls.Add(this.lblTaxTitle);
-            this.groupBox1.Controls.Add(this.lblQtyTitle);
-            this.groupBox1.Controls.Add(this.lblQty);
-            this.groupBox1.Controls.Add(this.lblTax);
-            this.groupBox1.Controls.Add(this.lblAmount);
-            this.groupBox1.Controls.Add(this.lblTotal);
-            this.groupBox1.Controls.Add(this.lvInventories);
-            this.groupBox1.Controls.Add(this.dtDate);
-            this.groupBox1.Controls.Add(this.lblDate);
-            this.groupBox1.Controls.Add(this.btnCreateInvoice);
-            this.groupBox1.Controls.Add(this.lblFamilyGroup);
-            this.groupBox1.Controls.Add(this.btnViewInventories);
-            this.groupBox1.Controls.Add(this.cbFamilyGroup);
-            this.groupBox1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(41, 106);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1128, 422);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "View shipped inventories";
-            // 
-            // lblPlant
-            // 
-            this.lblPlant.AutoSize = true;
-            this.lblPlant.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblPlant.Location = new System.Drawing.Point(24, 46);
-            this.lblPlant.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPlant.Name = "lblPlant";
-            this.lblPlant.Size = new System.Drawing.Size(38, 17);
-            this.lblPlant.TabIndex = 15;
-            this.lblPlant.Text = "Plant";
-            // 
-            // cbPlant
-            // 
-            this.cbPlant.FormattingEnabled = true;
-            this.cbPlant.Location = new System.Drawing.Point(68, 42);
-            this.cbPlant.Margin = new System.Windows.Forms.Padding(4);
-            this.cbPlant.Name = "cbPlant";
-            this.cbPlant.Size = new System.Drawing.Size(109, 25);
-            this.cbPlant.TabIndex = 14;
-            this.cbPlant.SelectedIndexChanged += new System.EventHandler(this.cbPlant_SelectedIndexChanged);
-            // 
-            // lblAmountTitle
-            // 
-            this.lblAmountTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblAmountTitle.AutoSize = true;
-            this.lblAmountTitle.Location = new System.Drawing.Point(956, 397);
-            this.lblAmountTitle.Name = "lblAmountTitle";
-            this.lblAmountTitle.Size = new System.Drawing.Size(73, 17);
-            this.lblAmountTitle.TabIndex = 8;
-            this.lblAmountTitle.Text = "Amount: ";
-            // 
-            // lblTaxTitle
-            // 
-            this.lblTaxTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblTaxTitle.AutoSize = true;
-            this.lblTaxTitle.Location = new System.Drawing.Point(849, 396);
-            this.lblTaxTitle.Name = "lblTaxTitle";
-            this.lblTaxTitle.Size = new System.Drawing.Size(42, 17);
-            this.lblTaxTitle.TabIndex = 9;
-            this.lblTaxTitle.Text = "Tax: ";
-            // 
-            // lblQtyTitle
-            // 
-            this.lblQtyTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblQtyTitle.AutoSize = true;
-            this.lblQtyTitle.Location = new System.Drawing.Point(742, 397);
-            this.lblQtyTitle.Name = "lblQtyTitle";
-            this.lblQtyTitle.Size = new System.Drawing.Size(42, 17);
-            this.lblQtyTitle.TabIndex = 10;
-            this.lblQtyTitle.Text = "Qty: ";
-            // 
-            // lblQty
-            // 
-            this.lblQty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblQty.AutoSize = true;
-            this.lblQty.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblQty.Location = new System.Drawing.Point(790, 397);
-            this.lblQty.Name = "lblQty";
-            this.lblQty.Size = new System.Drawing.Size(16, 17);
-            this.lblQty.TabIndex = 11;
-            this.lblQty.Text = "0";
-            // 
-            // lblTax
-            // 
-            this.lblTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblTax.AutoSize = true;
-            this.lblTax.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTax.Location = new System.Drawing.Point(897, 397);
-            this.lblTax.Name = "lblTax";
-            this.lblTax.Size = new System.Drawing.Size(44, 17);
-            this.lblTax.TabIndex = 12;
-            this.lblTax.Text = "$0.00";
-            // 
-            // lblAmount
-            // 
-            this.lblAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblAmount.AutoSize = true;
-            this.lblAmount.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblAmount.Location = new System.Drawing.Point(1035, 397);
-            this.lblAmount.Name = "lblAmount";
-            this.lblAmount.Size = new System.Drawing.Size(44, 17);
-            this.lblAmount.TabIndex = 13;
-            this.lblAmount.Text = "$0.00";
-            // 
-            // lblTotal
-            // 
-            this.lblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(661, 396);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(48, 17);
-            this.lblTotal.TabIndex = 7;
-            this.lblTotal.Text = "Total:";
-            // 
-            // lvInventories
-            // 
-            this.lvInventories.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvInventories.BackColor = System.Drawing.SystemColors.Window;
-            this.lvInventories.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lvInventories.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lvInventories.GridLines = true;
-            this.lvInventories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lvInventories.HideSelection = false;
-            this.lvInventories.Location = new System.Drawing.Point(20, 94);
-            this.lvInventories.Margin = new System.Windows.Forms.Padding(20, 40, 20, 40);
-            this.lvInventories.Name = "lvInventories";
-            this.lvInventories.Size = new System.Drawing.Size(1089, 287);
-            this.lvInventories.TabIndex = 3;
-            this.lvInventories.UseCompatibleStateImageBehavior = false;
-            this.lvInventories.View = System.Windows.Forms.View.Details;
-            // 
-            // dtDate
-            // 
-            this.dtDate.Location = new System.Drawing.Point(585, 43);
-            this.dtDate.Margin = new System.Windows.Forms.Padding(4);
-            this.dtDate.Name = "dtDate";
-            this.dtDate.Size = new System.Drawing.Size(209, 24);
-            this.dtDate.TabIndex = 6;
-            this.dtDate.ValueChanged += new System.EventHandler(this.dtDate_ValueChanged);
-            // 
-            // lblDate
-            // 
-            this.lblDate.AutoSize = true;
-            this.lblDate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblDate.Location = new System.Drawing.Point(540, 45);
-            this.lblDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(37, 17);
-            this.lblDate.TabIndex = 5;
-            this.lblDate.Text = "Date";
-            // 
-            // btnCreateInvoice
-            // 
-            this.btnCreateInvoice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateInvoice.Enabled = false;
-            this.btnCreateInvoice.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnCreateInvoice.Location = new System.Drawing.Point(39, 386);
-            this.btnCreateInvoice.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCreateInvoice.Name = "btnCreateInvoice";
-            this.btnCreateInvoice.Size = new System.Drawing.Size(131, 28);
-            this.btnCreateInvoice.TabIndex = 4;
-            this.btnCreateInvoice.Text = "Create Invoice";
-            this.btnCreateInvoice.UseVisualStyleBackColor = true;
-            this.btnCreateInvoice.Click += new System.EventHandler(this.btnCreateInvoice_Click);
             // 
             // LineNum
             // 
@@ -342,23 +136,272 @@ namespace SEQB
             this.lblTitle.TabIndex = 4;
             this.lblTitle.Text = "QuickBooks integration";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 106);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1226, 643);
+            this.tabControl1.TabIndex = 16;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1218, 614);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "View Shipped Inventories";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1218, 614);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Delete Open Invoices";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // cbFamilyGroup
+            // 
+            this.cbFamilyGroup.FormattingEnabled = true;
+            this.cbFamilyGroup.Location = new System.Drawing.Point(305, 42);
+            this.cbFamilyGroup.Margin = new System.Windows.Forms.Padding(4);
+            this.cbFamilyGroup.Name = "cbFamilyGroup";
+            this.cbFamilyGroup.Size = new System.Drawing.Size(209, 25);
+            this.cbFamilyGroup.TabIndex = 0;
+            this.cbFamilyGroup.SelectedIndexChanged += new System.EventHandler(this.cbFamilyGroup_SelectedIndexChanged);
+            // 
+            // btnViewInventories
+            // 
+            this.btnViewInventories.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnViewInventories.Location = new System.Drawing.Point(824, 40);
+            this.btnViewInventories.Margin = new System.Windows.Forms.Padding(4);
+            this.btnViewInventories.Name = "btnViewInventories";
+            this.btnViewInventories.Size = new System.Drawing.Size(129, 28);
+            this.btnViewInventories.TabIndex = 2;
+            this.btnViewInventories.Text = "Refresh View";
+            this.btnViewInventories.UseVisualStyleBackColor = true;
+            this.btnViewInventories.Click += new System.EventHandler(this.btnViewInventories_Click);
+            // 
+            // lblFamilyGroup
+            // 
+            this.lblFamilyGroup.AutoSize = true;
+            this.lblFamilyGroup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblFamilyGroup.Location = new System.Drawing.Point(206, 46);
+            this.lblFamilyGroup.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFamilyGroup.Name = "lblFamilyGroup";
+            this.lblFamilyGroup.Size = new System.Drawing.Size(88, 17);
+            this.lblFamilyGroup.TabIndex = 1;
+            this.lblFamilyGroup.Text = "Family Group";
+            // 
+            // btnCreateInvoice
+            // 
+            this.btnCreateInvoice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCreateInvoice.Enabled = false;
+            this.btnCreateInvoice.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnCreateInvoice.Location = new System.Drawing.Point(39, 584);
+            this.btnCreateInvoice.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateInvoice.Name = "btnCreateInvoice";
+            this.btnCreateInvoice.Size = new System.Drawing.Size(131, 28);
+            this.btnCreateInvoice.TabIndex = 4;
+            this.btnCreateInvoice.Text = "Create Invoice";
+            this.btnCreateInvoice.UseVisualStyleBackColor = true;
+            this.btnCreateInvoice.Click += new System.EventHandler(this.btnCreateInvoice_Click);
+            // 
+            // lblDate
+            // 
+            this.lblDate.AutoSize = true;
+            this.lblDate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblDate.Location = new System.Drawing.Point(540, 45);
+            this.lblDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(37, 17);
+            this.lblDate.TabIndex = 5;
+            this.lblDate.Text = "Date";
+            // 
+            // dtDate
+            // 
+            this.dtDate.Location = new System.Drawing.Point(585, 43);
+            this.dtDate.Margin = new System.Windows.Forms.Padding(4);
+            this.dtDate.Name = "dtDate";
+            this.dtDate.Size = new System.Drawing.Size(209, 24);
+            this.dtDate.TabIndex = 6;
+            this.dtDate.ValueChanged += new System.EventHandler(this.dtDate_ValueChanged);
+            // 
+            // lvInventories
+            // 
+            this.lvInventories.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvInventories.BackColor = System.Drawing.SystemColors.Window;
+            this.lvInventories.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvInventories.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lvInventories.GridLines = true;
+            this.lvInventories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvInventories.HideSelection = false;
+            this.lvInventories.Location = new System.Drawing.Point(20, 94);
+            this.lvInventories.Margin = new System.Windows.Forms.Padding(20, 40, 20, 40);
+            this.lvInventories.Name = "lvInventories";
+            this.lvInventories.Size = new System.Drawing.Size(1177, 479);
+            this.lvInventories.TabIndex = 3;
+            this.lvInventories.UseCompatibleStateImageBehavior = false;
+            this.lvInventories.View = System.Windows.Forms.View.Details;
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Location = new System.Drawing.Point(661, 594);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(48, 17);
+            this.lblTotal.TabIndex = 7;
+            this.lblTotal.Text = "Total:";
+            // 
+            // lblAmount
+            // 
+            this.lblAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblAmount.AutoSize = true;
+            this.lblAmount.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblAmount.Location = new System.Drawing.Point(1035, 595);
+            this.lblAmount.Name = "lblAmount";
+            this.lblAmount.Size = new System.Drawing.Size(44, 17);
+            this.lblAmount.TabIndex = 13;
+            this.lblAmount.Text = "$0.00";
+            // 
+            // lblTax
+            // 
+            this.lblTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTax.AutoSize = true;
+            this.lblTax.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTax.Location = new System.Drawing.Point(897, 595);
+            this.lblTax.Name = "lblTax";
+            this.lblTax.Size = new System.Drawing.Size(44, 17);
+            this.lblTax.TabIndex = 12;
+            this.lblTax.Text = "$0.00";
+            // 
+            // lblQty
+            // 
+            this.lblQty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblQty.AutoSize = true;
+            this.lblQty.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblQty.Location = new System.Drawing.Point(790, 595);
+            this.lblQty.Name = "lblQty";
+            this.lblQty.Size = new System.Drawing.Size(16, 17);
+            this.lblQty.TabIndex = 11;
+            this.lblQty.Text = "0";
+            // 
+            // lblQtyTitle
+            // 
+            this.lblQtyTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblQtyTitle.AutoSize = true;
+            this.lblQtyTitle.Location = new System.Drawing.Point(742, 595);
+            this.lblQtyTitle.Name = "lblQtyTitle";
+            this.lblQtyTitle.Size = new System.Drawing.Size(42, 17);
+            this.lblQtyTitle.TabIndex = 10;
+            this.lblQtyTitle.Text = "Qty: ";
+            // 
+            // lblTaxTitle
+            // 
+            this.lblTaxTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTaxTitle.AutoSize = true;
+            this.lblTaxTitle.Location = new System.Drawing.Point(849, 594);
+            this.lblTaxTitle.Name = "lblTaxTitle";
+            this.lblTaxTitle.Size = new System.Drawing.Size(42, 17);
+            this.lblTaxTitle.TabIndex = 9;
+            this.lblTaxTitle.Text = "Tax: ";
+            // 
+            // lblAmountTitle
+            // 
+            this.lblAmountTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblAmountTitle.AutoSize = true;
+            this.lblAmountTitle.Location = new System.Drawing.Point(956, 595);
+            this.lblAmountTitle.Name = "lblAmountTitle";
+            this.lblAmountTitle.Size = new System.Drawing.Size(73, 17);
+            this.lblAmountTitle.TabIndex = 8;
+            this.lblAmountTitle.Text = "Amount: ";
+            // 
+            // cbPlant
+            // 
+            this.cbPlant.FormattingEnabled = true;
+            this.cbPlant.Location = new System.Drawing.Point(68, 42);
+            this.cbPlant.Margin = new System.Windows.Forms.Padding(4);
+            this.cbPlant.Name = "cbPlant";
+            this.cbPlant.Size = new System.Drawing.Size(109, 25);
+            this.cbPlant.TabIndex = 14;
+            this.cbPlant.SelectedIndexChanged += new System.EventHandler(this.cbPlant_SelectedIndexChanged);
+            // 
+            // lblPlant
+            // 
+            this.lblPlant.AutoSize = true;
+            this.lblPlant.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblPlant.Location = new System.Drawing.Point(24, 46);
+            this.lblPlant.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPlant.Name = "lblPlant";
+            this.lblPlant.Size = new System.Drawing.Size(38, 17);
+            this.lblPlant.TabIndex = 15;
+            this.lblPlant.Text = "Plant";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.lblPlant);
+            this.groupBox1.Controls.Add(this.cbPlant);
+            this.groupBox1.Controls.Add(this.lblAmountTitle);
+            this.groupBox1.Controls.Add(this.lblTaxTitle);
+            this.groupBox1.Controls.Add(this.lblQtyTitle);
+            this.groupBox1.Controls.Add(this.lblQty);
+            this.groupBox1.Controls.Add(this.lblTax);
+            this.groupBox1.Controls.Add(this.lblAmount);
+            this.groupBox1.Controls.Add(this.lblTotal);
+            this.groupBox1.Controls.Add(this.lvInventories);
+            this.groupBox1.Controls.Add(this.dtDate);
+            this.groupBox1.Controls.Add(this.lblDate);
+            this.groupBox1.Controls.Add(this.btnCreateInvoice);
+            this.groupBox1.Controls.Add(this.lblFamilyGroup);
+            this.groupBox1.Controls.Add(this.btnViewInventories);
+            this.groupBox1.Controls.Add(this.cbFamilyGroup);
+            this.groupBox1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox1.Location = new System.Drawing.Point(0, -7);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(1216, 620);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1227, 573);
+            this.ClientSize = new System.Drawing.Size(1250, 761);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(1245, 600);
             this.Name = "MainForm";
             this.Text = "Sample Express QuickBooks";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResizeBegin += new System.EventHandler(this.MainForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
-            this.FormClosing += new FormClosingEventHandler(this.MainForm_FormClosing);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -368,16 +411,7 @@ namespace SEQB
 
 
         #endregion
-
-        private System.Windows.Forms.ComboBox cbFamilyGroup;
-        private System.Windows.Forms.Label lblFamilyGroup;
-        private System.Windows.Forms.Button btnViewInventories;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnCreateInvoice;
-        private System.Windows.Forms.ListView lvInventories;
-        private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.DateTimePicker dtDate;
         private System.Windows.Forms.ColumnHeader LineNum;
         private System.Windows.Forms.ColumnHeader Id;
         private System.Windows.Forms.ColumnHeader PartNumber;
@@ -388,15 +422,26 @@ namespace SEQB
         private System.Windows.Forms.ColumnHeader Tax;
         private System.Windows.Forms.ColumnHeader Amount;
         private System.Windows.Forms.ColumnHeader Dummy;
-        private Label lblTaxTitle;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private GroupBox groupBox1;
+        private Label lblPlant;
+        private ComboBox cbPlant;
         private Label lblAmountTitle;
+        private Label lblTaxTitle;
         private Label lblQtyTitle;
         private Label lblQty;
         private Label lblTax;
         private Label lblAmount;
         private Label lblTotal;
-        private Label lblPlant;
-        private ComboBox cbPlant;
+        private ListView lvInventories;
+        private DateTimePicker dtDate;
+        private Label lblDate;
+        private Button btnCreateInvoice;
+        private Label lblFamilyGroup;
+        private Button btnViewInventories;
+        private ComboBox cbFamilyGroup;
     }
 }
 
