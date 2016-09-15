@@ -8,6 +8,8 @@ namespace SEQB
     {
         public static event EventHandler<QBMsgEventArgs> MsgEvent;
 
+        private static readonly string NewLine = Environment.NewLine;
+
         private static void RaiseEvent(string msg)
         {
             MsgEvent?.Invoke(typeof(QBHelper), new QBMsgEventArgs(msg));
@@ -87,7 +89,7 @@ namespace SEQB
                 int sCode = res.StatusCode;
                 //string sMessage = res.StatusMessage;
                 //string sSeverity = res.StatusSeverity;
-                //MessageBox.Show("StatusCode = " + sCode + "\n" + "StatusMessage = " + sMessage + "\n" + "StatusSeverity = " + sSeverity);
+                //MessageBox.Show("StatusCode = " + sCode + NewLine + "StatusMessage = " + sMessage + NewLine + "StatusSeverity = " + sSeverity);
 
                 if (sCode == 0)
                 {
@@ -115,7 +117,9 @@ namespace SEQB
                         IInvoiceRet invRet = resp.Detail as IInvoiceRet;
                         resStr = resStr + "Following invoice has been successfully submitted to QuickBooks:\n\n\n";
                         if (invRet?.TxnNumber != null)
-                            resStr = resStr + "Txn Number = " + Convert.ToString(invRet.TxnNumber.GetValue()) + "\n";
+                        {
+                            resStr = resStr + "Txn Number = " + Convert.ToString(invRet.TxnNumber.GetValue()) + NewLine;
+                        }
                     } // if (statusCode == 0)
                 } // else (sCode)
             } // else (MessageSetStatusCode)
@@ -203,7 +207,7 @@ namespace SEQB
             for (i = 0; i <= supportedVersions.Count - 1; i++)
             {
                 svers = supportedVersions.GetAt(i);
-                vers = Convert.ToDouble(svers, CultureInfo.InvariantCulture);
+                vers = Convert.ToDouble(svers, CultureInfo.CurrentCulture);
                 if (vers > LastVers)
                 {
                     LastVers = vers;
@@ -237,41 +241,41 @@ namespace SEQB
                 IInvoiceRet invoiceRet = response.Detail as IInvoiceRet;
                 resString = resString + "Following invoice has been successfully submitted to QuickBooks:\n\n\n";
                 if (invoiceRet.TimeCreated != null)
-                    resString = resString + "Time Created = " + Convert.ToString(invoiceRet.TimeCreated.GetValue()) + "\n";
+                    resString = resString + "Time Created = " + Convert.ToString(invoiceRet.TimeCreated.GetValue()) + NewLine;
                 if (invoiceRet.TxnNumber != null)
-                    resString = resString + "Txn Number = " + Convert.ToString(invoiceRet.TxnNumber.GetValue()) + "\n";
+                    resString = resString + "Txn Number = " + Convert.ToString(invoiceRet.TxnNumber.GetValue()) + NewLine;
                 if (invoiceRet.TxnDate != null)
-                    resString = resString + "Txn Date = " + Convert.ToString(invoiceRet.TxnDate.GetValue()) + "\n";
+                    resString = resString + "Txn Date = " + Convert.ToString(invoiceRet.TxnDate.GetValue()) + NewLine;
                 if (invoiceRet.RefNumber != null)
-                    resString = resString + "Reference Number = " + invoiceRet.RefNumber.GetValue() + "\n";
+                    resString = resString + "Reference Number = " + invoiceRet.RefNumber.GetValue() + NewLine;
                 if (invoiceRet.CustomerRef.FullName != null)
-                    resString = resString + "Customer FullName = " + invoiceRet.CustomerRef.FullName.GetValue() + "\n";
-                resString = resString + "\nBilling Address:" + "\n";
+                    resString = resString + "Customer FullName = " + invoiceRet.CustomerRef.FullName.GetValue() + NewLine;
+                resString = resString + "\nBilling Address:" + NewLine;
                 if (invoiceRet.BillAddress.Addr1 != null)
-                    resString = resString + "Addr1 = " + invoiceRet.BillAddress.Addr1.GetValue() + "\n";
+                    resString = resString + "Addr1 = " + invoiceRet.BillAddress.Addr1.GetValue() + NewLine;
                 if (invoiceRet.BillAddress.Addr2 != null)
-                    resString = resString + "Addr2 = " + invoiceRet.BillAddress.Addr2.GetValue() + "\n";
+                    resString = resString + "Addr2 = " + invoiceRet.BillAddress.Addr2.GetValue() + NewLine;
                 if (invoiceRet.BillAddress.Addr3 != null)
-                    resString = resString + "Addr3 = " + invoiceRet.BillAddress.Addr3.GetValue() + "\n";
+                    resString = resString + "Addr3 = " + invoiceRet.BillAddress.Addr3.GetValue() + NewLine;
                 if (invoiceRet.BillAddress.Addr4 != null)
-                    resString = resString + "Addr4 = " + invoiceRet.BillAddress.Addr4.GetValue() + "\n";
+                    resString = resString + "Addr4 = " + invoiceRet.BillAddress.Addr4.GetValue() + NewLine;
                 if (invoiceRet.BillAddress.City != null)
-                    resString = resString + "City = " + invoiceRet.BillAddress.City.GetValue() + "\n";
+                    resString = resString + "City = " + invoiceRet.BillAddress.City.GetValue() + NewLine;
                 if (invoiceRet.BillAddress.State != null)
-                    resString = resString + "State = " + invoiceRet.BillAddress.State.GetValue() + "\n";
+                    resString = resString + "State = " + invoiceRet.BillAddress.State.GetValue() + NewLine;
                 if (invoiceRet.BillAddress.PostalCode != null)
-                    resString = resString + "Postal Code = " + invoiceRet.BillAddress.PostalCode.GetValue() + "\n";
+                    resString = resString + "Postal Code = " + invoiceRet.BillAddress.PostalCode.GetValue() + NewLine;
                 if (invoiceRet.BillAddress.Country != null)
-                    resString = resString + "Country = " + invoiceRet.BillAddress.Country.GetValue() + "\n";
+                    resString = resString + "Country = " + invoiceRet.BillAddress.Country.GetValue() + NewLine;
                 if (invoiceRet.PONumber != null)
-                    resString = resString + "\nPO Number = " + invoiceRet.PONumber.GetValue() + "\n";
+                    resString = resString + "\nPO Number = " + invoiceRet.PONumber.GetValue() + NewLine;
                 if (invoiceRet.TermsRef.FullName != null)
-                    resString = resString + "Terms = " + invoiceRet.TermsRef.FullName.GetValue() + "\n";
+                    resString = resString + "Terms = " + invoiceRet.TermsRef.FullName.GetValue() + NewLine;
                 if (invoiceRet.DueDate != null)
-                    resString = resString + "Due Date = " + Convert.ToString(invoiceRet.DueDate.GetValue()) + "\n";
+                    resString = resString + "Due Date = " + Convert.ToString(invoiceRet.DueDate.GetValue()) + NewLine;
                 if (invoiceRet.SalesTaxTotal != null)
-                    resString = resString + "Sales Tax = " + Convert.ToString(invoiceRet.SalesTaxTotal.GetValue()) + "\n";
-                resString = resString + "\nInvoice Line Items:" + "\n";
+                    resString = resString + "Sales Tax = " + Convert.ToString(invoiceRet.SalesTaxTotal.GetValue()) + NewLine;
+                resString = resString + "\nInvoice Line Items:" + NewLine;
                 IORInvoiceLineRetList orInvoiceLineRetList = invoiceRet.ORInvoiceLineRetList;
                 string fullname = "<empty>";
                 string desc = "<empty>";
@@ -306,10 +310,10 @@ namespace SEQB
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.TotalAmount != null)
                             amount = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.TotalAmount.GetValue());
                     }
-                    resString = resString + "Fullname: " + fullname + "\n";
-                    resString = resString + "Description: " + desc + "\n";
-                    resString = resString + "Rate: " + rate + "\n";
-                    resString = resString + "Quantity: " + quantity + "\n";
+                    resString = resString + "Fullname: " + fullname + NewLine;
+                    resString = resString + "Description: " + desc + NewLine;
+                    resString = resString + "Rate: " + rate + NewLine;
+                    resString = resString + "Quantity: " + quantity + NewLine;
                     resString = resString + "Amount: " + amount + "\n\n";
                 }
                 RaiseEvent(resString);

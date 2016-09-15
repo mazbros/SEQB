@@ -17,6 +17,8 @@ namespace SEQB
         private double _totalAmount;
         private string _pkgIdsForUpdate;
 
+        private static readonly string NewLine = Environment.NewLine;
+
         private DataTable _dt;
 
         public MainForm()
@@ -101,9 +103,9 @@ namespace SEQB
                 cmd.ExecuteNonQuery();
                 conn.Close();
 
-                _totalQty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.InvariantCulture);
-                _totalTax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.InvariantCulture);
-                _totalAmount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.InvariantCulture);
+                _totalQty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.CurrentCulture);
+                _totalTax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.CurrentCulture);
+                _totalAmount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.CurrentCulture);
                 _pkgIdsForUpdate = cmd.Parameters["@TIds"].Value.ToString();
 
                 lblQty.Text = _totalQty.ToString();
@@ -222,7 +224,7 @@ namespace SEQB
                         // Create the line item for the invoice
                         var invoiceLineAdd = invoiceAdd.ORInvoiceLineAddList.Append().InvoiceLineAdd;
                         invoiceLineAdd.ItemRef.FullName.SetValue(row["Description"].ToString());
-                        invoiceLineAdd.Quantity.SetValue(Convert.ToDouble(row["Qty"].ToString(), CultureInfo.InvariantCulture));
+                        invoiceLineAdd.Quantity.SetValue(Convert.ToDouble(row["Qty"].ToString(), CultureInfo.CurrentCulture));
                         invoiceLineAdd.SalesTaxCodeRef.FullName.SetValue(row["TaxRef"].ToString()
                             .Equals("Non-Taxable Sales")
                             ? "Non"
@@ -240,7 +242,7 @@ namespace SEQB
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + "\n" + @"Stack Trace: " + "\n" + ex.StackTrace + "\n" + @"Exiting the application");
+                    MessageBox.Show(ex.Message + NewLine + @"Stack Trace: " + NewLine + ex.StackTrace + NewLine + @"Exiting the application");
                 }
             }
         } // method QBFC_AddInvoice
@@ -396,7 +398,7 @@ namespace SEQB
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + "\n" + @"Stack trace: " + "\n" + ex.StackTrace);
+                    MessageBox.Show(ex.Message + NewLine + @"Stack trace: " + NewLine + ex.StackTrace);
                 }
             }
         }
