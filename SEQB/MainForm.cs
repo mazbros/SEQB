@@ -218,7 +218,7 @@ namespace SEQB
                     invoiceAdd.DueDate.SetValue(DateTime.Now.AddDays(30));
 
                     // Set the values for the invoice line
-                    for (int i = 0; i < _dt.Rows.Count; i++)
+                    for (var i = 0; i < _dt.Rows.Count; i++)
                     {
                         var row = _dt.Rows[i];
                         // Create the line item for the invoice
