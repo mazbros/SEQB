@@ -9,6 +9,7 @@ namespace SEQB
         public static event EventHandler<QBMsgEventArgs> MsgEvent;
 
         private static readonly string NewLine = Environment.NewLine;
+        private static readonly string Tab = "\t";
 
         private static void RaiseEvent(string msg)
         {
@@ -204,7 +205,7 @@ namespace SEQB
                 for (i = 0; i <= supportedVersions.Count - 1; i++)
                 {
                     var svers = supportedVersions.GetAt(i);
-                    var vers = Convert.ToDouble(svers, CultureInfo.CurrentCulture);
+                    var vers = Convert.ToDouble(svers, CultureInfo.GetCultureInfo("en-US"));
                     if (vers > lastVers)
                     {
                         lastVers = vers;
@@ -216,38 +217,41 @@ namespace SEQB
 
         public static bool ShowRequestResult(QBSessionManager sessionManager, IMsgSetRequest requestMsgSet)
         {
-            IMsgSetResponse responseMsgSet;
-            responseMsgSet = sessionManager.DoRequests(requestMsgSet);
+            var responseMsgSet = sessionManager.DoRequests(requestMsgSet);
 
             // Uncomment the following to view and save the request and response XML
-            string requestXML = requestMsgSet.ToXMLString();
-            RaiseEvent(requestXML);
+            //string requestXML = requestMsgSet.ToXMLString();
+            //RaiseEvent(requestXML);
             //SaveXML(requestXML);
             // string responseXML = responseSet.ToXMLString();
             // MessageBox.Show(responseXML);
             // SaveXML(responseXML);
 
-            IResponse response = responseMsgSet.ResponseList.GetAt(0);
-            int statusCode = response.StatusCode;
-            string statusMessage = response.StatusMessage;
-            string statusSeverity = response.StatusSeverity;
-            RaiseEvent("Status:\nCode = " + statusCode + "\nMessage = " + statusMessage + "\nSeverity = " + statusSeverity);
+            var response = responseMsgSet.ResponseList.GetAt(0);
+            var statusCode = response.StatusCode;
+            //string statusMessage = response.StatusMessage;
+            //string statusSeverity = response.StatusSeverity;
+            //RaiseEvent("Status:\nCode = " + statusCode + "\nMessage = " + statusMessage + "\nSeverity = " + statusSeverity);
 
             if (statusCode == 0)
             {
                 var resString = string.Empty;
                 var invoiceRet = response.Detail as IInvoiceRet;
-                resString += "Following invoice has been successfully submitted to QuickBooks:\n\n\n";
+                resString += "The following invoice has been successfully submitted to QuickBooks:\n\n";
+                if (invoiceRet?.RefNumber != null)
+                    resString += "Invoice Number: " + Tab + invoiceRet.RefNumber.GetValue() + NewLine;
                 if (invoiceRet?.TimeCreated != null)
-                    resString += "Time Created = " + Convert.ToString(invoiceRet.TimeCreated.GetValue(), CultureInfo.CurrentCulture) + NewLine;
+                    resString += "Created ShipDate: " + Tab + Convert.ToString(invoiceRet.TimeCreated.GetValue().ToString("MM/dd/yyyy"), CultureInfo.GetCultureInfo("en-US")) + NewLine;
+                /*
                 if (invoiceRet?.TxnNumber != null)
                     resString += "Txn Number = " + Convert.ToString(invoiceRet.TxnNumber.GetValue()) + NewLine;
+                */
                 if (invoiceRet?.TxnDate != null)
-                    resString += "Txn Date = " + Convert.ToString(invoiceRet.TxnDate.GetValue(), CultureInfo.CurrentCulture) + NewLine;
-                if (invoiceRet?.RefNumber != null)
-                    resString += "Reference Number = " + invoiceRet.RefNumber.GetValue() + NewLine;
+                    resString += "Transaction ShipDate: " + Tab + Convert.ToString(invoiceRet.TxnDate.GetValue().ToString("MM/dd/yyyy"), CultureInfo.GetCultureInfo("en-US")) + NewLine;
+                /*
                 if (invoiceRet?.CustomerRef.FullName != null)
-                    resString = resString + "Customer FullName = " + invoiceRet.CustomerRef.FullName.GetValue() + NewLine;
+                    resString += "Customer FullName = " + invoiceRet.CustomerRef.FullName.GetValue() + NewLine;
+                
                 resString += "\nBilling Address:" + NewLine;
                 if (invoiceRet?.BillAddress.Addr1 != null)
                     resString += "Addr1 = " + invoiceRet.BillAddress.Addr1.GetValue() + NewLine;
@@ -270,9 +274,9 @@ namespace SEQB
                 if (invoiceRet.TermsRef.FullName != null)
                     resString += "Terms = " + invoiceRet.TermsRef.FullName.GetValue() + NewLine;
                 if (invoiceRet.DueDate != null)
-                    resString += "Due Date = " + Convert.ToString(invoiceRet.DueDate.GetValue(), CultureInfo.CurrentCulture) + NewLine;
+                    resString += "Due ShipDate = " + Convert.ToString(invoiceRet.DueDate.GetValue(), CultureInfo.GetCultureInfo("en-US")) + NewLine;
                 if (invoiceRet.SalesTaxTotal != null)
-                    resString += "Sales Tax = " + Convert.ToString(invoiceRet.SalesTaxTotal.GetValue(), CultureInfo.CurrentCulture) + NewLine;
+                    resString += "Sales Tax = " + Convert.ToString(invoiceRet.SalesTaxTotal.GetValue(), CultureInfo.GetCultureInfo("en-US")) + NewLine;
                 resString += "\nInvoice Line Items:" + NewLine;
                 var orInvoiceLineRetList = invoiceRet.ORInvoiceLineRetList;
                 var fullname = "<empty>";
@@ -289,11 +293,11 @@ namespace SEQB
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Desc != null)
                             desc = invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Desc.GetValue();
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.ORRate.Rate != null)
-                            rate = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.ORRate.Rate.GetValue(), CultureInfo.CurrentCulture);
+                            rate = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.ORRate.Rate.GetValue(), CultureInfo.GetCultureInfo("en-US"));
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Quantity != null)
-                            quantity = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Quantity.GetValue(), CultureInfo.CurrentCulture);
+                            quantity = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Quantity.GetValue(), CultureInfo.GetCultureInfo("en-US"));
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Amount != null)
-                            amount = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Amount.GetValue(), CultureInfo.CurrentCulture);
+                            amount = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineRet.Amount.GetValue(), CultureInfo.GetCultureInfo("en-US"));
                     }
                     else
                     {
@@ -302,11 +306,11 @@ namespace SEQB
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.Desc != null)
                             desc = invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.Desc.GetValue();
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.InvoiceLineRetList.GetAt(i).ORRate.Rate != null)
-                            rate = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.InvoiceLineRetList.GetAt(i).ORRate.Rate.GetValue(), CultureInfo.CurrentCulture);
+                            rate = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.InvoiceLineRetList.GetAt(i).ORRate.Rate.GetValue(), CultureInfo.GetCultureInfo("en-US"));
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.Quantity != null)
-                            quantity = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.Quantity.GetValue(), CultureInfo.CurrentCulture);
+                            quantity = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.Quantity.GetValue(), CultureInfo.GetCultureInfo("en-US"));
                         if (invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.TotalAmount != null)
-                            amount = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.TotalAmount.GetValue(), CultureInfo.CurrentCulture);
+                            amount = Convert.ToString(invoiceRet.ORInvoiceLineRetList.GetAt(i).InvoiceLineGroupRet.TotalAmount.GetValue(), CultureInfo.GetCultureInfo("en-US"));
                     }
                     resString = resString + "Fullname: " + fullname + NewLine;
                     resString = resString + "Description: " + desc + NewLine;
@@ -314,6 +318,7 @@ namespace SEQB
                     resString = resString + "Quantity: " + quantity + NewLine;
                     resString = resString + "Amount: " + amount + "\n\n";
                 }
+                */
                 RaiseEvent(resString);
             } // if statusCode is zero
             return statusCode == 0;

@@ -16,7 +16,8 @@ namespace SEQBTests
         [TestMethod()]
         public void DeleteInvoiceAndUpdatePackages()
         {
-            MainForm.DeleteInvoiceAndUpdatePackages("3462");
+            var result = MainForm.DeleteInvoiceAndUpdatePackages("3462");
+            Assert.IsTrue(result);
         }
     }
 }

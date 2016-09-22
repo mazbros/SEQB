@@ -103,20 +103,94 @@ namespace SEQB
                 cmd.ExecuteNonQuery();
                 conn.Close();
 
-                _totalQty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.CurrentCulture);
-                _totalTax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.CurrentCulture);
-                _totalAmount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.CurrentCulture);
+                _totalQty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
+                _totalTax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
+                _totalAmount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
                 _pkgIdsForUpdate = cmd.Parameters["@TIds"].Value.ToString();
 
-                lblQty.Text = _totalQty.ToString();
-                lblTax.Text = _totalTax.ToString("C2", CultureInfo.CurrentCulture);
-                lblAmount.Text = _totalAmount.ToString("C2", CultureInfo.CurrentCulture);
+                lblQty.Text = _totalQty.ToString(CultureInfo.GetCultureInfo("en-US"));
+                lblTax.Text = _totalTax.ToString("C2", CultureInfo.GetCultureInfo("en-US"));
+                lblAmount.Text = _totalAmount.ToString("C2", CultureInfo.GetCultureInfo("en-US"));
             }
 
             SizeLastColumn(lvInventories);
 
             btnCreateInvoice.Enabled = lvInventories.Items.Count > 0;
         }
+
+        private IEnumerable<Invoice> GetAllCreatedInvoices()
+        {
+            var ret = new List<Invoice>();
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["db"].ConnectionString))
+            {
+                conn.Open();
+                var query = @"
+                    select Invoice from PackageTrack
+                    where Invoice is not null
+                    group by Invoice";
+                using (var command = new SqlCommand(query, conn))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ret.Add(new Invoice() { InvoiceNumber = reader.GetString(0) });
+                        }
+                    }
+                }
+            }
+            return ret;
+        }
+
+        private void FilllvInvoices()
+        {
+            lvInvoices.Items.Clear();
+            lvInvoices.View = View.Details;
+
+            var invoices = GetAllCreatedInvoices();
+
+            using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["db"].ConnectionString))
+            {
+                conn.Open();
+
+                foreach(var invoice in invoices)
+                {
+                    var cmd = new SqlCommand("SummaryForQBInvoiceDelete", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.Add(new SqlParameter("@InvoiceNum", invoice.InvoiceNumber));
+                    cmd.Parameters.Add(new SqlParameter("@TrxnDate", SqlDbType.VarChar, 16));
+                    cmd.Parameters.Add(new SqlParameter("@TQty", DbType.Int16));
+                    cmd.Parameters.Add(new SqlParameter("@TTax", SqlDbType.VarChar, 16));
+                    cmd.Parameters.Add(new SqlParameter("@TAmount", SqlDbType.VarChar, 16));
+                    cmd.Parameters["@TrxnDate"].Direction = ParameterDirection.Output;
+                    cmd.Parameters["@TQty"].Direction = ParameterDirection.Output;
+                    cmd.Parameters["@TTax"].Direction = ParameterDirection.Output;
+                    cmd.Parameters["@TAmount"].Direction = ParameterDirection.Output;
+
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                    invoice.ShipDate = cmd.Parameters["@TrxnDate"].Value.ToString();
+                    invoice.Qty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
+                    invoice.Tax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
+                    invoice.Amount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
+
+                    var item = new ListViewItem(invoice.InvoiceNumber) {Tag = invoice};
+                    item.SubItems.Add(invoice.ShipDate.ToString(CultureInfo.GetCultureInfo("en-US")));
+                    item.SubItems.Add(invoice.Qty.ToString(CultureInfo.GetCultureInfo("en-US")));
+                    item.SubItems.Add(invoice.Tax.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
+                    item.SubItems.Add(invoice.Amount.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
+                    lvInvoices.Items.Add(item);
+                }
+            }
+
+            SizeLastColumn(lvInvoices);
+
+            btnDeleteInvoice.Enabled = lvInvoices.SelectedItems.Count > 0;
+        }
+
 
         private void cbFamilyGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -130,7 +204,6 @@ namespace SEQB
 
         private void cbPlant_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lvInventories.Items.Clear();
             FilllvInventories();
         }
 
@@ -144,6 +217,11 @@ namespace SEQB
             lvInventories.View = View.Details;
             lvInventories.Columns.AddRange(new[] { LineNum, Id, PartNumber, FamilyGroup, Description, Qty, UnitPrice, Tax, Amount, Dummy });
             SizeLastColumn(lvInventories);
+
+            lvInvoices.View = View.Details;
+            lvInvoices.Columns.AddRange(new[] { InvoiceNumber, InvoiceTrxnDate, InvoiceQty, InvoiceTax, InvoiceAmount, Dummy2 });
+            SizeLastColumn(lvInvoices);
+            FilllvInvoices();
         }
 
         private void SizeLastColumn(ListView lv)
@@ -154,7 +232,12 @@ namespace SEQB
         
         private void btnCreateInvoice_Click(object sender, EventArgs e)
         {
+            var disabledButton = (Button) sender;
+            disabledButton.Enabled = false;
+
             QBFC_AddInvoice();
+            FilllvInventories();
+            FilllvInvoices();
         }
 
         private void QBFC_AddInvoice()
@@ -224,7 +307,7 @@ namespace SEQB
                         // Create the line item for the invoice
                         var invoiceLineAdd = invoiceAdd.ORInvoiceLineAddList.Append().InvoiceLineAdd;
                         invoiceLineAdd.ItemRef.FullName.SetValue(row["Description"].ToString());
-                        invoiceLineAdd.Quantity.SetValue(Convert.ToDouble(row["Qty"].ToString(), CultureInfo.CurrentCulture));
+                        invoiceLineAdd.Quantity.SetValue(Convert.ToDouble(row["Qty"].ToString(), CultureInfo.GetCultureInfo("en-US")));
                         invoiceLineAdd.SalesTaxCodeRef.FullName.SetValue(row["TaxRef"].ToString()
                             .Equals("Non-Taxable Sales")
                             ? "Non"
@@ -327,16 +410,19 @@ namespace SEQB
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
             SizeLastColumn(lvInventories);
+            SizeLastColumn(lvInvoices);
         }
 
         private void MainForm_ResizeBegin(object sender, EventArgs e)
         {
             SizeLastColumn(lvInventories);
+            SizeLastColumn(lvInvoices);
         }
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             SizeLastColumn(lvInventories);
+            SizeLastColumn(lvInvoices);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -351,6 +437,7 @@ namespace SEQB
 
         private string GetNextInvoiceNumber()
         {
+            const int daysBack = -60;
             var returnVal = string.Empty;
             using (var sessionManager = SessionManager.GetInstance)
             {
@@ -362,7 +449,7 @@ namespace SEQB
                 QBHelper.EnableErrorRecovery(qbSessionManager);
 
                 var invoiceQuery = requestMsgSet.AppendInvoiceQueryRq();
-                invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.ModifiedDateRangeFilter.FromModifiedDate.SetValue(DateTime.Now.AddDays(-30), true);
+                invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.ModifiedDateRangeFilter.FromModifiedDate.SetValue(DateTime.Now.AddDays(daysBack), true);
                 invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.ModifiedDateRangeFilter.ToModifiedDate.SetValue(DateTime.Now.AddDays(0), true);
                 invoiceQuery.IncludeLineItems.SetValue(false);
                 invoiceQuery.IncludeLinkedTxns.SetValue(false);
@@ -380,9 +467,10 @@ namespace SEQB
             return returnVal;
         }
 
-        public static void DeleteInvoiceAndUpdatePackages(string refNum)
+        public static bool DeleteInvoiceAndUpdatePackages(string refNum)
         {
-            if (!DeleteInvoiceByNumber(refNum)) return;
+            var result = false;
+            if (!DeleteInvoiceByNumber(refNum)) return false;
             using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["db"].ConnectionString))
             {
                 try
@@ -394,13 +482,14 @@ namespace SEQB
                         CommandType = CommandType.StoredProcedure
                     };
                     cmd.Parameters.Add(new SqlParameter("@invoiceNum", refNum));
-                    cmd.ExecuteNonQuery();
+                    result = cmd.ExecuteNonQuery() > 0;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message + NewLine + @"Stack trace: " + NewLine + ex.StackTrace);
                 }
             }
+            return result;
         }
 
         private static void UpdatePackagesInvoiceCreated(string refNum, string pkgIds)
@@ -473,5 +562,21 @@ namespace SEQB
             return returnVal;
         }
 
+        private void btnDeleteInvoice_Click(object sender, EventArgs e)
+        {
+            foreach(ListViewItem item in lvInvoices.SelectedItems)
+            {
+                var invoice = item.Tag as Invoice;
+                DeleteInvoiceAndUpdatePackages(invoice?.InvoiceNumber);
+                FilllvInvoices();
+                FilllvInventories();
+            }
+        }
+
+        private void lvInvoices_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnDeleteInvoice.Enabled = lvInvoices.SelectedItems.Count > 0;
+        }
     }
+
 }
