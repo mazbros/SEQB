@@ -241,13 +241,13 @@ namespace SEQB
                 if (invoiceRet?.RefNumber != null)
                     resString += "Invoice Number: " + Tab + invoiceRet.RefNumber.GetValue() + NewLine;
                 if (invoiceRet?.TimeCreated != null)
-                    resString += "Created ShipDate: " + Tab + Convert.ToString(invoiceRet.TimeCreated.GetValue().ToString("MM/dd/yyyy"), CultureInfo.GetCultureInfo("en-US")) + NewLine;
+                    resString += "Created Date: " + Tab + Convert.ToString(invoiceRet.TimeCreated.GetValue().ToString("MM/dd/yyyy"), CultureInfo.GetCultureInfo("en-US")) + NewLine;
                 /*
                 if (invoiceRet?.TxnNumber != null)
                     resString += "Txn Number = " + Convert.ToString(invoiceRet.TxnNumber.GetValue()) + NewLine;
                 */
                 if (invoiceRet?.TxnDate != null)
-                    resString += "Transaction ShipDate: " + Tab + Convert.ToString(invoiceRet.TxnDate.GetValue().ToString("MM/dd/yyyy"), CultureInfo.GetCultureInfo("en-US")) + NewLine;
+                    resString += "Transaction Date: " + Tab + Convert.ToString(invoiceRet.TxnDate.GetValue().ToString("MM/dd/yyyy"), CultureInfo.GetCultureInfo("en-US")) + NewLine;
                 /*
                 if (invoiceRet?.CustomerRef.FullName != null)
                     resString += "Customer FullName = " + invoiceRet.CustomerRef.FullName.GetValue() + NewLine;
@@ -274,7 +274,7 @@ namespace SEQB
                 if (invoiceRet.TermsRef.FullName != null)
                     resString += "Terms = " + invoiceRet.TermsRef.FullName.GetValue() + NewLine;
                 if (invoiceRet.DueDate != null)
-                    resString += "Due ShipDate = " + Convert.ToString(invoiceRet.DueDate.GetValue(), CultureInfo.GetCultureInfo("en-US")) + NewLine;
+                    resString += "Due Date = " + Convert.ToString(invoiceRet.DueDate.GetValue(), CultureInfo.GetCultureInfo("en-US")) + NewLine;
                 if (invoiceRet.SalesTaxTotal != null)
                     resString += "Sales Tax = " + Convert.ToString(invoiceRet.SalesTaxTotal.GetValue(), CultureInfo.GetCultureInfo("en-US")) + NewLine;
                 resString += "\nInvoice Line Items:" + NewLine;

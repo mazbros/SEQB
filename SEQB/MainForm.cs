@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using QBFC13Lib;
+using System.Linq;
 
 namespace SEQB
 {
@@ -142,12 +143,61 @@ namespace SEQB
             return ret;
         }
 
+        private IEnumerable<Invoice> GetFilteredInvoicesFromQB(List<Invoice> list)
+        {
+            var unPaidInvoices = new List<Invoice>();
+            using (var sessionManager = SessionManager.GetInstance)
+            {
+                var qbSessionManager = sessionManager.OpenSession();
+                // Get the RequestMsgSet based on the correct QB Version
+                var requestMsgSet = QBHelper.GetLatestMsgSetRequest(qbSessionManager);
+                // Initialize the message set request object
+                requestMsgSet.Attributes.OnError = ENRqOnError.roeContinue;
+                QBHelper.EnableErrorRecovery(qbSessionManager);
+
+                // Add the request to the message set request object
+                var invoiceQuery = requestMsgSet.AppendInvoiceQueryRq();
+                //invoiceQuery.ORInvoiceQuery.InvoiceFilter. ORRefNumberFilter. RefNumberFilter. MatchCriterion.SetValue(ENMatchCriterion.mcContains);
+                //invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORRefNumberFilter.RefNumberFilter.RefNumber.SetValue(refNum);
+                invoiceQuery.ORInvoiceQuery.InvoiceFilter.PaidStatus.SetValue(ENPaidStatus.psNotPaidOnly);
+                //foreach (var inv in list)
+                //{
+                //    invoiceQuery.ORInvoiceQuery.RefNumberList.Add(inv.InvoiceNumber);
+                //}
+                invoiceQuery.IncludeLineItems.SetValue(false);
+                invoiceQuery.IncludeLinkedTxns.SetValue(false);
+
+                var responseMsgSet = qbSessionManager.DoRequests(requestMsgSet);
+                var response = responseMsgSet.ResponseList.GetAt(0);
+                var invoiceRetList = (IInvoiceRetList)response.Detail;
+
+                for (var i = 0; i < invoiceRetList.Count; i++)
+                {
+                    var invoiceRet = invoiceRetList.GetAt(i);
+                    var item = new Invoice
+                    {
+                        InvoiceNumber = invoiceRet.RefNumber.GetValue(),
+                        TrxnDate = invoiceRet.TimeCreated.GetValue().ToString("d")
+                    };
+                    unPaidInvoices.Add(item);
+                    //list.RemoveAll(x => x.InvoiceNumber == invoiceRet.RefNumber.GetValue());
+                    //returnVal = (int.Parse(invoiceRet.RefNumber.GetValue()) + 1).ToString();
+                }
+            }
+            foreach (var invoice in list)
+                foreach (var unPaidInvoice in unPaidInvoices)
+                    if (invoice.InvoiceNumber == unPaidInvoice.InvoiceNumber)
+                        invoice.TrxnDate = unPaidInvoice.TrxnDate;
+            return list.Where(x => unPaidInvoices.Select(i => i.InvoiceNumber).Contains(x.InvoiceNumber));
+        }
+
         private void FilllvInvoices()
         {
             lvInvoices.Items.Clear();
             lvInvoices.View = View.Details;
 
             var invoices = GetAllCreatedInvoices();
+            invoices = GetFilteredInvoicesFromQB(invoices.ToList());
 
             using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["db"].ConnectionString))
             {
@@ -173,12 +223,14 @@ namespace SEQB
                     cmd.ExecuteNonQuery();
 
                     invoice.ShipDate = cmd.Parameters["@TrxnDate"].Value.ToString();
+                    invoice.TrxnDate = invoice.TrxnDate;
                     invoice.Qty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
                     invoice.Tax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
                     invoice.Amount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
 
                     var item = new ListViewItem(invoice.InvoiceNumber) {Tag = invoice};
                     item.SubItems.Add(invoice.ShipDate.ToString(CultureInfo.GetCultureInfo("en-US")));
+                    item.SubItems.Add(invoice.TrxnDate.ToString(CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Qty.ToString(CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Tax.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Amount.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
@@ -219,7 +271,7 @@ namespace SEQB
             SizeLastColumn(lvInventories);
 
             lvInvoices.View = View.Details;
-            lvInvoices.Columns.AddRange(new[] { InvoiceNumber, InvoiceTrxnDate, InvoiceQty, InvoiceTax, InvoiceAmount, Dummy2 });
+            lvInvoices.Columns.AddRange(new[] { InvoiceNumber, InvoiceShipDate, InvoiceTrxnDate, InvoiceQty, InvoiceTax, InvoiceAmount, Dummy2 });
             SizeLastColumn(lvInvoices);
             FilllvInvoices();
         }
@@ -564,7 +616,7 @@ namespace SEQB
 
         private void btnDeleteInvoice_Click(object sender, EventArgs e)
         {
-            foreach(ListViewItem item in lvInvoices.SelectedItems)
+            foreach (ListViewItem item in lvInvoices.SelectedItems)
             {
                 var invoice = item.Tag as Invoice;
                 DeleteInvoiceAndUpdatePackages(invoice?.InvoiceNumber);

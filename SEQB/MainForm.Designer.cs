@@ -46,6 +46,7 @@ namespace SEQB
             this.Amount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceAmount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceTrxnDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.InvoiceShipDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dummy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dummy2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblTitle = new System.Windows.Forms.Label();
@@ -153,9 +154,15 @@ namespace SEQB
             this.InvoiceAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.InvoiceAmount.Width = 84;
             //
+            // InvoiceShipDate
+            //
+            this.InvoiceShipDate.Text = "Ship Date";
+            this.InvoiceShipDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.InvoiceShipDate.Width = 84;
+            //
             // InvoiceTrxnDate
             //
-            this.InvoiceTrxnDate.Text = "Ship ShipDate";
+            this.InvoiceTrxnDate.Text = "Created Date";
             this.InvoiceTrxnDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.InvoiceTrxnDate.Width = 84;
             // 
@@ -384,7 +391,7 @@ namespace SEQB
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(30, 13);
             this.lblDate.TabIndex = 5;
-            this.lblDate.Text = "ShipDate";
+            this.lblDate.Text = "Date";
             // 
             // lblFamilyGroup
             // 
@@ -532,6 +539,7 @@ namespace SEQB
         private ColumnHeader InvoiceTax;
         private ColumnHeader InvoiceAmount;
         private ColumnHeader InvoiceTrxnDate;
+        private ColumnHeader InvoiceShipDate;
         private ColumnHeader Dummy;
         private ColumnHeader Dummy2;
 
