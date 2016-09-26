@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Globalization;
 using QBFC13Lib;
 using System.Linq;
+using Intuit.Ipp.LinqExtender;
 
 namespace SEQB
 {
@@ -177,7 +178,7 @@ namespace SEQB
                     var item = new Invoice
                     {
                         InvoiceNumber = invoiceRet.RefNumber.GetValue(),
-                        TrxnDate = invoiceRet.TimeCreated.GetValue().ToString("d")
+                        CreateDate = invoiceRet.TimeCreated.GetValue().ToString("d")
                     };
                     unPaidInvoices.Add(item);
                     //list.RemoveAll(x => x.InvoiceNumber == invoiceRet.RefNumber.GetValue());
@@ -187,7 +188,7 @@ namespace SEQB
             foreach (var invoice in list)
                 foreach (var unPaidInvoice in unPaidInvoices)
                     if (invoice.InvoiceNumber == unPaidInvoice.InvoiceNumber)
-                        invoice.TrxnDate = unPaidInvoice.TrxnDate;
+                        invoice.CreateDate = unPaidInvoice.CreateDate;
             return list.Where(x => unPaidInvoices.Select(i => i.InvoiceNumber).Contains(x.InvoiceNumber));
         }
 
@@ -210,11 +211,11 @@ namespace SEQB
                         CommandType = CommandType.StoredProcedure
                     };
                     cmd.Parameters.Add(new SqlParameter("@InvoiceNum", invoice.InvoiceNumber));
-                    cmd.Parameters.Add(new SqlParameter("@TrxnDate", SqlDbType.VarChar, 16));
+                    cmd.Parameters.Add(new SqlParameter("@ShipDate", SqlDbType.VarChar, 16));
                     cmd.Parameters.Add(new SqlParameter("@TQty", DbType.Int16));
                     cmd.Parameters.Add(new SqlParameter("@TTax", SqlDbType.VarChar, 16));
                     cmd.Parameters.Add(new SqlParameter("@TAmount", SqlDbType.VarChar, 16));
-                    cmd.Parameters["@TrxnDate"].Direction = ParameterDirection.Output;
+                    cmd.Parameters["@ShipDate"].Direction = ParameterDirection.Output;
                     cmd.Parameters["@TQty"].Direction = ParameterDirection.Output;
                     cmd.Parameters["@TTax"].Direction = ParameterDirection.Output;
                     cmd.Parameters["@TAmount"].Direction = ParameterDirection.Output;
@@ -222,15 +223,15 @@ namespace SEQB
                     cmd.Connection = conn;
                     cmd.ExecuteNonQuery();
 
-                    invoice.ShipDate = cmd.Parameters["@TrxnDate"].Value.ToString();
-                    invoice.TrxnDate = invoice.TrxnDate;
+                    invoice.ShipDate = cmd.Parameters["@ShipDate"].Value.ToString();
+                    invoice.CreateDate = invoice.CreateDate;
                     invoice.Qty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
                     invoice.Tax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
                     invoice.Amount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
 
                     var item = new ListViewItem(invoice.InvoiceNumber) {Tag = invoice};
+                    item.SubItems.Add(invoice.CreateDate.ToString(CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.ShipDate.ToString(CultureInfo.GetCultureInfo("en-US")));
-                    item.SubItems.Add(invoice.TrxnDate.ToString(CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Qty.ToString(CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Tax.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Amount.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
@@ -271,7 +272,7 @@ namespace SEQB
             SizeLastColumn(lvInventories);
 
             lvInvoices.View = View.Details;
-            lvInvoices.Columns.AddRange(new[] { InvoiceNumber, InvoiceShipDate, InvoiceTrxnDate, InvoiceQty, InvoiceTax, InvoiceAmount, Dummy2 });
+            lvInvoices.Columns.AddRange(new[] { InvoiceNumber, InvoiceCreateDate, InvoiceShipDate, InvoiceQty, InvoiceTax, InvoiceAmount, Dummy2 });
             SizeLastColumn(lvInvoices);
             FilllvInvoices();
         }
@@ -489,7 +490,7 @@ namespace SEQB
 
         private string GetNextInvoiceNumber()
         {
-            const int daysBack = -60;
+            const int daysBack = -120;
             var returnVal = string.Empty;
             using (var sessionManager = SessionManager.GetInstance)
             {
@@ -502,7 +503,7 @@ namespace SEQB
 
                 var invoiceQuery = requestMsgSet.AppendInvoiceQueryRq();
                 invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.ModifiedDateRangeFilter.FromModifiedDate.SetValue(DateTime.Now.AddDays(daysBack), true);
-                invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.ModifiedDateRangeFilter.ToModifiedDate.SetValue(DateTime.Now.AddDays(0), true);
+                invoiceQuery.ORInvoiceQuery.InvoiceFilter.ORDateRangeFilter.ModifiedDateRangeFilter.ToModifiedDate.SetValue(DateTime.Now.AddDays(1), true);
                 invoiceQuery.IncludeLineItems.SetValue(false);
                 invoiceQuery.IncludeLinkedTxns.SetValue(false);
 
@@ -510,11 +511,14 @@ namespace SEQB
                 var response = responseMsgSet.ResponseList.GetAt(0);
                 var invoiceRetList = (IInvoiceRetList)response.Detail;
 
-                if (invoiceRetList != null)
+                if (invoiceRetList == null) return returnVal;
+                var sortedList = new List<string>();
+                for (var i = 0; i < invoiceRetList.Count; i++)
                 {
-                    var invoiceRet = invoiceRetList.GetAt(invoiceRetList.Count - 1);
-                    returnVal = (int.Parse(invoiceRet.RefNumber.GetValue()) + 1).ToString();
+                    sortedList.Add(invoiceRetList.GetAt(i).RefNumber.GetValue());
                 }
+                sortedList.Sort();
+                returnVal = (int.Parse(sortedList[sortedList.Count - 1]) + 1).ToString();
             }
             return returnVal;
         }

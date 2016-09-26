@@ -45,8 +45,8 @@ namespace SEQB
             this.InvoiceTax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Amount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceAmount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.InvoiceTrxnDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceShipDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.InvoiceCreateDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dummy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dummy2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblTitle = new System.Windows.Forms.Label();
@@ -160,11 +160,11 @@ namespace SEQB
             this.InvoiceShipDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.InvoiceShipDate.Width = 84;
             //
-            // InvoiceTrxnDate
+            // InvoiceCreateDate
             //
-            this.InvoiceTrxnDate.Text = "Created Date";
-            this.InvoiceTrxnDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.InvoiceTrxnDate.Width = 84;
+            this.InvoiceCreateDate.Text = "Created Date";
+            this.InvoiceCreateDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.InvoiceCreateDate.Width = 84;
             // 
             // Dummy
             // 
@@ -538,8 +538,8 @@ namespace SEQB
         private ColumnHeader InvoiceQty;
         private ColumnHeader InvoiceTax;
         private ColumnHeader InvoiceAmount;
-        private ColumnHeader InvoiceTrxnDate;
         private ColumnHeader InvoiceShipDate;
+        private ColumnHeader InvoiceCreateDate;
         private ColumnHeader Dummy;
         private ColumnHeader Dummy2;
 

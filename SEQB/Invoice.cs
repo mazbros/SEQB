@@ -7,6 +7,6 @@
         public double Amount { get; set; }
         public double Tax { get; set; }
         public string ShipDate { get; set; }
-        public string TrxnDate { get; set; }
+        public string CreateDate { get; set; }
     }
 }
