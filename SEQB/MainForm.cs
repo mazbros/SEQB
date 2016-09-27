@@ -8,7 +8,6 @@ using System.Drawing;
 using System.Globalization;
 using QBFC13Lib;
 using System.Linq;
-using Intuit.Ipp.LinqExtender;
 
 namespace SEQB
 {

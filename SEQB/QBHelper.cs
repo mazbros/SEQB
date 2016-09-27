@@ -112,12 +112,12 @@ namespace SEQB
                     var statCode = resp.StatusCode;
                     if (statCode == 0)
                     {
-                        var invRet = resp.Detail as IInvoiceRet;
-                        var resStr = "The following invoice has been successfully submitted to QuickBooks:\n\n\n";
-                        if (invRet?.TxnNumber != null)
-                        {
-                            resStr += "Txn Number = " + Convert.ToString(invRet.TxnNumber.GetValue()) + NewLine;
-                        }
+                        //var invRet = resp.Detail as IInvoiceRet;
+                        //var resStr = "The following invoice has been successfully submitted to QuickBooks:\n\n\n";
+                        //if (invRet?.TxnNumber != null)
+                        //{
+                        //    resStr += "Txn Number = " + Convert.ToString(invRet.TxnNumber.GetValue()) + NewLine;
+                        //}
                     } // if (statusCode == 0)
                 } // else (sCode)
             } // else (MessageSetStatusCode)
