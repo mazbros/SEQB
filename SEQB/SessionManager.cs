@@ -45,6 +45,8 @@ namespace SEQB
 
             QBFile = ConfigurationManager.AppSettings["QBFile"];
 
+            _qbSessionManager.CloseConnection();
+
             _qbSessionManager.OpenConnection("SEQB", "Sample Express QuickBooks Integration");
             _qbSessionManager.BeginSession(QBFile, ENOpenMode.omDontCare);
             _booSessionBegun = true;

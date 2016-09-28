@@ -295,11 +295,11 @@ namespace SEQB
         private void QBFC_AddInvoice()
         {
             //TODO: make sure this is correct and doesn't need to be a selection from list
-            var custFN = "GAF MC Access & Low Slope";
+            var custFn = cbFamilyGroup.Text.Equals("TRUSLATE") ? "GAF MC TRUSLATE" : "GAF MC Steep Slope";
+
+            var billTo = GetBillTo(custFn);
 
             var invoiceNumber = GetNextInvoiceNumber();
-
-            var billTo = GetBillTo(custFN);
 
             using (var sessionManager = SessionManager.GetInstance)
             {
@@ -317,7 +317,7 @@ namespace SEQB
 
                     // Set the IInvoiceAdd field values
                     // Customer:Job
-                    invoiceAdd.CustomerRef.FullName.SetValue(custFN);
+                    invoiceAdd.CustomerRef.FullName.SetValue(custFn);
 
                     // Invoice Date
                     invoiceAdd.TxnDate.SetValue(dtDate.Value);
@@ -349,6 +349,31 @@ namespace SEQB
                     //    invoiceAdd.TermsRef.FullName.SetValue(terms);
                     //}
 
+                    // F.O.B.
+                    string fob;
+                    switch (cbPlant.Text)
+                    {
+                        case "PA":
+                            fob = "SEI of PA";
+                            break;
+                        case "MO":
+                            fob = "SEI of MO";
+                            break;
+                        case "MA":
+                            fob = "SEI of MA";
+                            break;
+                        default:
+                            fob = "SEI of PA";
+                            break;
+                    }
+                    invoiceAdd.FOB.SetValue(fob);
+
+                    // VIA
+                    invoiceAdd.ShipMethodRef.FullName.SetValue("UPS");
+
+                    // Customer Message
+                    invoiceAdd.CustomerMsgRef.FullName.SetValue("Thank you for your business.");
+                    
                     // Due Date
                     invoiceAdd.DueDate.SetValue(DateTime.Now.AddDays(30));
 
