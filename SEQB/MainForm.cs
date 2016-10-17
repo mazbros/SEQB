@@ -294,7 +294,10 @@ namespace SEQB
 
         private void QBFC_AddInvoice()
         {
-            //TODO: make sure this is correct and doesn't need to be a selection from list
+            /* 
+             * TODO: implement a switch based on family group and/or family group combinations
+             * TODO: Bob Glass to supply rules
+            */  
             var custFn = cbFamilyGroup.Text.Equals("TRUSLATE") ? "GAF MC TRUSLATE" : "GAF MC Steep Slope";
 
             var billTo = GetBillTo(custFn);
@@ -336,7 +339,10 @@ namespace SEQB
                     invoiceAdd.BillAddress.Country.SetValue(billTo.Country);
 
                     // P.O. Number
-                    //TODO: make sure this is correct
+                    /* 
+                     * TODO: based on GAF classification and category, select proper PO NUMBER (GAF have to finalize their classification)
+                     * TODO: Bob Glass to supply rules for the above
+                    */
                     invoiceAdd.PONumber.SetValue("GAFSAMPLES");
                     // Terms
                     //string terms = "cmboBx1_Terms.Text";
@@ -369,6 +375,10 @@ namespace SEQB
                     invoiceAdd.FOB.SetValue(fob);
 
                     // VIA
+                    /* 
+                    * TODO: based on wheather it is UPS Ground, International, GAF or Fright LTL, select proper shipment type
+                    * TODO: however, it might just stay UPS for all types (Bob Glass to make final decision)
+                    */
                     invoiceAdd.ShipMethodRef.FullName.SetValue("UPS");
 
                     // Customer Message
