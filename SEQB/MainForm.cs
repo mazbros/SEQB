@@ -37,7 +37,12 @@ namespace SEQB
 
         private void FillcbPlant()
         {
-            var plants = new List<Plant> {new Plant {Name = "PA", Id = 1}, new Plant() {Name = "MO", Id = 2}};
+            var plants = new List<Plant>
+            {
+                new Plant {Name = "PA", Id = 1},
+                new Plant {Name = "MO", Id = 2},
+                new Plant {Name = "MA", Id = 3}
+            };
             cbPlant.DataSource = plants;
             cbPlant.ValueMember = "Id";
             cbPlant.DisplayMember = "Name";
@@ -317,6 +322,9 @@ namespace SEQB
                 {
                     // Add the request to the message set request object
                     var invoiceAdd = requestMsgSet.AppendInvoiceAddRq();
+
+                    // Setup invoice for sedning over email
+                    invoiceAdd.IsToBeEmailed.SetValue(true);
 
                     // Set the IInvoiceAdd field values
                     // Customer:Job
