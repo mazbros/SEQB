@@ -427,6 +427,7 @@ namespace SEQB
                             .Equals("Non-Taxable Sales")
                             ? "Non"
                             : "Tax");
+                        invoiceLineAdd.ServiceDate.SetValue(Convert.ToDateTime(row["ShipDate"]));
                     } // for
 
                     // Entire invoice sales tax rate, can only be for a single plant (state: PA, MO, MA)
