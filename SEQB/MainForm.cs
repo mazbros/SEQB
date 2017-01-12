@@ -292,7 +292,7 @@ namespace SEQB
         private void MainForm_Load(object sender, EventArgs e)
         {
             lvInventories.View = View.Details;
-            lvInventories.Columns.AddRange(new[] { LineNum, Id, PartNumber, FamilyGroup, Description, Qty, UnitPrice, Tax, Amount, Dummy });
+            lvInventories.Columns.AddRange(new[] { LineNum, Id, PartNumber, FamilyGroup, Description, Qty, UnitPrice, Tax, Amount, ItemShipDate, Dummy });
             SizeLastColumn(lvInventories);
 
             lvInvoices.View = View.Details;

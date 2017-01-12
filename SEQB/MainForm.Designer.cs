@@ -44,6 +44,7 @@ namespace SEQB
             this.Tax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceTax = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Amount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ItemShipDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceAmount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceShipDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceCreateDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -155,6 +156,12 @@ namespace SEQB
             this.InvoiceAmount.Text = "Amount";
             this.InvoiceAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.InvoiceAmount.Width = 84;
+            // 
+            // ItemShipDate
+            // 
+            this.ItemShipDate.Text = "Ship Date";
+            this.ItemShipDate.Width = 84;
+            //
             // 
             // InvoiceShipDate
             // 
@@ -554,13 +561,15 @@ namespace SEQB
         private ColumnHeader UnitPrice;
         private ColumnHeader Tax;
         private ColumnHeader Amount;
+        private ColumnHeader ItemShipDate;
+        private ColumnHeader Dummy;
+
         private ColumnHeader InvoiceNumber;
         private ColumnHeader InvoiceQty;
         private ColumnHeader InvoiceTax;
         private ColumnHeader InvoiceAmount;
         private ColumnHeader InvoiceShipDate;
         private ColumnHeader InvoiceCreateDate;
-        private ColumnHeader Dummy;
         private ColumnHeader Dummy2;
 
         private TabControl tabControl1;
