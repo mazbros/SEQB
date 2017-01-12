@@ -32,7 +32,6 @@ namespace SEQB
             FillcbPlant();
 
             FillcbFamilyGroup();
-
         }
 
         private void FillcbPlant()
@@ -97,6 +96,7 @@ namespace SEQB
                     // skip 2 last columns (auxilary: Amount, TaxRef)
                     for (var i = 1; i < _dt.Columns.Count - 2; i++)
                     {
+                        if (i == 3) continue; // skip 1 column (auxilary: inventoryid)
                         item.SubItems.Add(row[i].ToString());
                     }
                     lvInventories.Items.Add(item);
@@ -140,7 +140,7 @@ namespace SEQB
                     {
                         while (reader.Read())
                         {
-                            ret.Add(new Invoice() { InvoiceNumber = reader.GetString(0) });
+                            ret.Add(new Invoice() { InvoiceNumber = reader.GetInt32(0).ToString() });
                         }
                     }
                 }
@@ -413,7 +413,9 @@ namespace SEQB
                     invoiceAdd.ItemSalesTaxRef.FullName.SetValue(cbPlant.Text + " Sales Tax");
                     invoiceAdd.ClassRef.FullName.SetValue(cbPlant.Text);
 
-                    if(QBHelper.ShowRequestResult(qbSessionManager, requestMsgSet))
+                    qbSessionManager.ClearErrorRecovery();
+
+                    if (QBHelper.ShowRequestResult(qbSessionManager, requestMsgSet))
                         UpdatePackagesInvoiceCreated(invoiceNumber, _pkgIdsForUpdate);
 
                     qbSessionManager.ClearErrorRecovery();

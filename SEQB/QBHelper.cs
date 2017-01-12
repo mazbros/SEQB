@@ -1,6 +1,7 @@
 ﻿using QBFC13Lib;
 using System;
 using System.Globalization;
+//using System.Windows.Forms;
 
 namespace SEQB
 {
@@ -219,12 +220,12 @@ namespace SEQB
         {
             var responseMsgSet = sessionManager.DoRequests(requestMsgSet);
 
-            // Uncomment the following to view and save the request and response XML
+            //Uncomment the following to view and save the request and response XML
             //string requestXML = requestMsgSet.ToXMLString();
             //RaiseEvent(requestXML);
             //SaveXML(requestXML);
-            // string responseXML = responseSet.ToXMLString();
-            // MessageBox.Show(responseXML);
+            //string responseXML = responseMsgSet.ToXMLString();
+            //MessageBox.Show(responseXML);
             // SaveXML(responseXML);
 
             var response = responseMsgSet.ResponseList.GetAt(0);
