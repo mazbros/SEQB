@@ -53,6 +53,8 @@ namespace SEQB
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblDateTo = new System.Windows.Forms.Label();
+            this.dtDateTo = new System.Windows.Forms.DateTimePicker();
             this.btnCreateInvoice = new System.Windows.Forms.Button();
             this.lblPlant = new System.Windows.Forms.Label();
             this.cbPlant = new System.Windows.Forms.ComboBox();
@@ -64,7 +66,7 @@ namespace SEQB
             this.lblAmount = new System.Windows.Forms.Label();
             this.lblTotal = new System.Windows.Forms.Label();
             this.lvInventories = new System.Windows.Forms.ListView();
-            this.dtDate = new System.Windows.Forms.DateTimePicker();
+            this.dtDateFrom = new System.Windows.Forms.DateTimePicker();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblFamilyGroup = new System.Windows.Forms.Label();
             this.btnViewInventories = new System.Windows.Forms.Button();
@@ -153,17 +155,15 @@ namespace SEQB
             this.InvoiceAmount.Text = "Amount";
             this.InvoiceAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.InvoiceAmount.Width = 84;
-            //
+            // 
             // InvoiceShipDate
-            //
+            // 
             this.InvoiceShipDate.Text = "Ship Date";
-            this.InvoiceShipDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.InvoiceShipDate.Width = 84;
-            //
+            this.InvoiceShipDate.Width = 134;
+            // 
             // InvoiceCreateDate
-            //
+            // 
             this.InvoiceCreateDate.Text = "Created Date";
-            this.InvoiceCreateDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.InvoiceCreateDate.Width = 84;
             // 
             // Dummy
@@ -219,6 +219,8 @@ namespace SEQB
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.lblDateTo);
+            this.groupBox1.Controls.Add(this.dtDateTo);
             this.groupBox1.Controls.Add(this.btnCreateInvoice);
             this.groupBox1.Controls.Add(this.lblPlant);
             this.groupBox1.Controls.Add(this.cbPlant);
@@ -230,7 +232,7 @@ namespace SEQB
             this.groupBox1.Controls.Add(this.lblAmount);
             this.groupBox1.Controls.Add(this.lblTotal);
             this.groupBox1.Controls.Add(this.lvInventories);
-            this.groupBox1.Controls.Add(this.dtDate);
+            this.groupBox1.Controls.Add(this.dtDateFrom);
             this.groupBox1.Controls.Add(this.lblDate);
             this.groupBox1.Controls.Add(this.lblFamilyGroup);
             this.groupBox1.Controls.Add(this.btnViewInventories);
@@ -241,6 +243,24 @@ namespace SEQB
             this.groupBox1.Size = new System.Drawing.Size(1108, 727);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
+            // 
+            // lblDateTo
+            // 
+            this.lblDateTo.AutoSize = true;
+            this.lblDateTo.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblDateTo.Location = new System.Drawing.Point(722, 38);
+            this.lblDateTo.Name = "lblDateTo";
+            this.lblDateTo.Size = new System.Drawing.Size(17, 13);
+            this.lblDateTo.TabIndex = 17;
+            this.lblDateTo.Text = "to";
+            // 
+            // dtDateTo
+            // 
+            this.dtDateTo.Location = new System.Drawing.Point(742, 34);
+            this.dtDateTo.Name = "dtDateTo";
+            this.dtDateTo.Size = new System.Drawing.Size(211, 21);
+            this.dtDateTo.TabIndex = 16;
+            this.dtDateTo.ValueChanged += new System.EventHandler(this.dtDateTo_ValueChanged);
             // 
             // btnCreateInvoice
             // 
@@ -259,7 +279,7 @@ namespace SEQB
             // 
             this.lblPlant.AutoSize = true;
             this.lblPlant.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblPlant.Location = new System.Drawing.Point(24, 38);
+            this.lblPlant.Location = new System.Drawing.Point(17, 38);
             this.lblPlant.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPlant.Name = "lblPlant";
             this.lblPlant.Size = new System.Drawing.Size(31, 13);
@@ -269,7 +289,7 @@ namespace SEQB
             // cbPlant
             // 
             this.cbPlant.FormattingEnabled = true;
-            this.cbPlant.Location = new System.Drawing.Point(68, 34);
+            this.cbPlant.Location = new System.Drawing.Point(56, 34);
             this.cbPlant.Margin = new System.Windows.Forms.Padding(4);
             this.cbPlant.Name = "cbPlant";
             this.cbPlant.Size = new System.Drawing.Size(109, 21);
@@ -375,29 +395,29 @@ namespace SEQB
             this.lvInventories.UseCompatibleStateImageBehavior = false;
             this.lvInventories.View = System.Windows.Forms.View.Details;
             // 
-            // dtDate
+            // dtDateFrom
             // 
-            this.dtDate.Location = new System.Drawing.Point(512, 34);
-            this.dtDate.Name = "dtDate";
-            this.dtDate.Size = new System.Drawing.Size(211, 21);
-            this.dtDate.TabIndex = 6;
-            this.dtDate.ValueChanged += new System.EventHandler(this.dtDate_ValueChanged);
+            this.dtDateFrom.Location = new System.Drawing.Point(509, 34);
+            this.dtDateFrom.Name = "dtDateFrom";
+            this.dtDateFrom.Size = new System.Drawing.Size(211, 21);
+            this.dtDateFrom.TabIndex = 6;
+            this.dtDateFrom.ValueChanged += new System.EventHandler(this.dtDateFrom_ValueChanged);
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblDate.Location = new System.Drawing.Point(476, 38);
+            this.lblDate.Location = new System.Drawing.Point(447, 38);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(30, 13);
+            this.lblDate.Size = new System.Drawing.Size(55, 13);
             this.lblDate.TabIndex = 5;
-            this.lblDate.Text = "Date";
+            this.lblDate.Text = "Date from";
             // 
             // lblFamilyGroup
             // 
             this.lblFamilyGroup.AutoSize = true;
             this.lblFamilyGroup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFamilyGroup.Location = new System.Drawing.Point(203, 37);
+            this.lblFamilyGroup.Location = new System.Drawing.Point(188, 37);
             this.lblFamilyGroup.Name = "lblFamilyGroup";
             this.lblFamilyGroup.Size = new System.Drawing.Size(69, 13);
             this.lblFamilyGroup.TabIndex = 1;
@@ -406,7 +426,7 @@ namespace SEQB
             // btnViewInventories
             // 
             this.btnViewInventories.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnViewInventories.Location = new System.Drawing.Point(739, 32);
+            this.btnViewInventories.Location = new System.Drawing.Point(996, 32);
             this.btnViewInventories.Name = "btnViewInventories";
             this.btnViewInventories.Size = new System.Drawing.Size(97, 23);
             this.btnViewInventories.TabIndex = 2;
@@ -417,7 +437,7 @@ namespace SEQB
             // cbFamilyGroup
             // 
             this.cbFamilyGroup.FormattingEnabled = true;
-            this.cbFamilyGroup.Location = new System.Drawing.Point(284, 34);
+            this.cbFamilyGroup.Location = new System.Drawing.Point(265, 34);
             this.cbFamilyGroup.Name = "cbFamilyGroup";
             this.cbFamilyGroup.Size = new System.Drawing.Size(158, 21);
             this.cbFamilyGroup.TabIndex = 0;
@@ -569,11 +589,13 @@ namespace SEQB
         private ListView lvInventories;
         private ListView lvInvoices;
 
-        private DateTimePicker dtDate;
+        private DateTimePicker dtDateFrom;
         
         private Button btnCreateInvoice;
         private Button btnViewInventories;
         private Button btnDeleteInvoice;
+        private Label lblDateTo;
+        private DateTimePicker dtDateTo;
     }
 }
 

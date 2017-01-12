@@ -78,7 +78,8 @@ namespace SEQB
                 if (plant != null)
                     cmd.Parameters.Add(new SqlParameter("@plant_Id", plant.Id));
                 cmd.Parameters.Add(new SqlParameter("@FG", cbFamilyGroup.Text));
-                cmd.Parameters.Add(new SqlParameter("@date", dtDate.Value));
+                cmd.Parameters.Add(new SqlParameter("@dateFrom", dtDateFrom.Value));
+                cmd.Parameters.Add(new SqlParameter("@dateTo", dtDateTo.Value));
                 cmd.Parameters.Add(new SqlParameter("@TQty", DbType.Int16));
                 cmd.Parameters.Add(new SqlParameter("@TTax", SqlDbType.VarChar, 16));
                 cmd.Parameters.Add(new SqlParameter("@TAmount", SqlDbType.VarChar, 16));
@@ -215,7 +216,7 @@ namespace SEQB
                         CommandType = CommandType.StoredProcedure
                     };
                     cmd.Parameters.Add(new SqlParameter("@InvoiceNum", invoice.InvoiceNumber));
-                    cmd.Parameters.Add(new SqlParameter("@ShipDate", SqlDbType.VarChar, 16));
+                    cmd.Parameters.Add(new SqlParameter("@ShipDate", SqlDbType.VarChar, 24));
                     cmd.Parameters.Add(new SqlParameter("@TQty", DbType.Int16));
                     cmd.Parameters.Add(new SqlParameter("@TTax", SqlDbType.VarChar, 16));
                     cmd.Parameters.Add(new SqlParameter("@TAmount", SqlDbType.VarChar, 16));
@@ -254,9 +255,28 @@ namespace SEQB
             FilllvInventories();
         }
 
-        private void dtDate_ValueChanged(object sender, EventArgs e)
+        private void dtDateFrom_ValueChanged(object sender, EventArgs e)
         {
+            adjustUpperDateBoundary();
             FilllvInventories();
+        }
+
+        private void dtDateTo_ValueChanged(object sender, EventArgs e)
+        {
+            adjustLowerDateBoundary();
+            FilllvInventories();
+        }
+
+        private void adjustUpperDateBoundary()
+        {
+            if (dtDateFrom.Value.Date > dtDateTo.Value.Date)
+                dtDateTo.Value = dtDateFrom.Value;
+        }
+
+        private void adjustLowerDateBoundary()
+        {
+            if (dtDateTo.Value.Date < dtDateFrom.Value.Date)
+                dtDateTo.Value = dtDateFrom.Value;
         }
 
         private void cbPlant_SelectedIndexChanged(object sender, EventArgs e)
@@ -331,7 +351,7 @@ namespace SEQB
                     invoiceAdd.CustomerRef.FullName.SetValue(custFn);
 
                     // Invoice Date
-                    invoiceAdd.TxnDate.SetValue(dtDate.Value);
+                    invoiceAdd.TxnDate.SetValue(DateTime.Now);
 
                     // Invoice Number
                     invoiceAdd.RefNumber.SetValue(invoiceNumber);
@@ -678,6 +698,7 @@ namespace SEQB
         {
             btnDeleteInvoice.Enabled = lvInvoices.SelectedItems.Count > 0;
         }
+
     }
 
 }
