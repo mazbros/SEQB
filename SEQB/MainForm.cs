@@ -413,7 +413,8 @@ namespace SEQB
                     invoiceAdd.ItemSalesTaxRef.FullName.SetValue(cbPlant.Text + " Sales Tax");
                     invoiceAdd.ClassRef.FullName.SetValue(cbPlant.Text);
 
-                    qbSessionManager.ClearErrorRecovery();
+                    if (qbSessionManager.IsErrorRecoveryInfo())
+                        qbSessionManager.ClearErrorRecovery();
 
                     if (QBHelper.ShowRequestResult(qbSessionManager, requestMsgSet))
                         UpdatePackagesInvoiceCreated(invoiceNumber, _pkgIdsForUpdate);

@@ -9,14 +9,14 @@ namespace SEQBTests
         [TestMethod()]
         public void DeleteInvoiceByNumberTest()
         {
-            var result = MainForm.DeleteInvoiceByNumber("3462");
+            var result = MainForm.DeleteInvoiceByNumber("3586");
             Assert.IsTrue(result);
         }
 
         [TestMethod()]
         public void DeleteInvoiceAndUpdatePackages()
         {
-            var result = MainForm.DeleteInvoiceAndUpdatePackages("3462");
+            var result = MainForm.DeleteInvoiceAndUpdatePackages("3586");
             Assert.IsTrue(result);
         }
     }
