@@ -141,7 +141,7 @@ namespace SEQB
                     {
                         while (reader.Read())
                         {
-                            ret.Add(new Invoice() { InvoiceNumber = reader.GetInt32(0).ToString() });
+                            ret.Add(new Invoice { InvoiceNumber = reader.GetInt32(0).ToString() });
                         }
                     }
                 }
@@ -444,7 +444,7 @@ namespace SEQB
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + NewLine + @"Stack Trace: " + NewLine + ex.StackTrace + NewLine + @"Exiting the application");
+                    QBHelper.RaiseEvent(ex.Message + NewLine + @"Stack Trace: " + NewLine + ex.StackTrace + NewLine + @"Exiting the application");
                 }
             }
         } // method QBFC_AddInvoice
@@ -485,17 +485,17 @@ namespace SEQB
 
                     // Uncomment the following to view and save the request and response XML
                     // string requestXML = requestSet.ToXMLString();
-                    // MessageBox.Show(requestXML);
+                    // QBHelper.RaiseEvent(requestXML);
                     // SaveXML(requestXML);
                     // string responseXML = responseSet.ToXMLString();
-                    // MessageBox.Show(responseXML);
+                    // QBHelper.RaiseEvent(responseXML);
                     // SaveXML(responseXML);
 
                     var response = responseSet.ResponseList.GetAt(0);
                     // int statusCode = response.StatusCode;
                     // string statusMessage = response.StatusMessage;
                     // string statusSeverity = response.StatusSeverity;
-                    // MessageBox.Show("Status:\nCode = " + statusCode + "\nMessage = " + statusMessage + "\nSeverity = " + statusSeverity);
+                    // QBHelper.RaiseEvent("Status:" + NewLine + "Code = " + statusCode + NewLine + "Message = " + statusMessage + NewLine + "Severity = " + statusSeverity);
 
 
                     var customerRetList = response.Detail as ICustomerRetList;
@@ -520,7 +520,7 @@ namespace SEQB
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + @"\nStack Trace: \n" + ex.StackTrace + @"\nExiting the application");
+                    QBHelper.RaiseEvent(ex.Message + NewLine + @"\nStack Trace:" + NewLine + ex.StackTrace + NewLine + @"\nExiting the application");
                 }
             }
             return ret;
@@ -608,7 +608,7 @@ namespace SEQB
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + NewLine + @"Stack trace: " + NewLine + ex.StackTrace);
+                    QBHelper.RaiseEvent(ex.Message + NewLine + @"Stack trace: " + NewLine + ex.StackTrace);
                 }
             }
             return result;
@@ -677,7 +677,7 @@ namespace SEQB
                 }
                 else
                 {
-                    MessageBox.Show(@"Invoice #" + refNum + @" was succesfully deleted.");
+                    QBHelper.RaiseEvent(@"Invoice #" + refNum + @" was succesfully deleted.");
                     returnVal = true;
                 }
             }
@@ -686,6 +686,9 @@ namespace SEQB
 
         private void btnDeleteInvoice_Click(object sender, EventArgs e)
         {
+            var disabledButton = (Button)sender;
+            disabledButton.Enabled = false;
+
             foreach (ListViewItem item in lvInvoices.SelectedItems)
             {
                 var invoice = item.Tag as Invoice;

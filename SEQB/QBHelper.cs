@@ -11,12 +11,12 @@ namespace SEQB
         private static readonly string NewLine = Environment.NewLine;
         private static readonly string Tab = "\t";
 
-        private static void RaiseEvent(string msg)
+        internal static void RaiseEvent(string msg)
         {
             MsgEvent?.Invoke(typeof(QBHelper), new QBMsgEventArgs(msg));
         }
 
-        public static void EnableErrorRecovery(QBSessionManager sessionManager)
+        internal static void EnableErrorRecovery(QBSessionManager sessionManager)
         {
             // ERROR RECOVERY: 
             // All steps are described in QBFC Developers Guide, on pg 41
