@@ -670,7 +670,6 @@ namespace SEQB
                     response = responseMsgSet.ResponseList.GetAt(0);
                 }
 
-
                 if (response.StatusCode != 0)
                 {
                     MessageBox.Show(response.StatusMessage);

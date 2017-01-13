@@ -76,11 +76,13 @@ namespace SEQB
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lvInvoices = new System.Windows.Forms.ListView();
             this.btnDeleteInvoice = new System.Windows.Forms.Button();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // LineNum
@@ -151,17 +153,16 @@ namespace SEQB
             this.Amount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Amount.Width = 84;
             // 
+            // ItemShipDate
+            // 
+            this.ItemShipDate.Text = "Ship Date";
+            this.ItemShipDate.Width = 84;
+            // 
             // InvoiceAmount
             // 
             this.InvoiceAmount.Text = "Amount";
             this.InvoiceAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.InvoiceAmount.Width = 84;
-            // 
-            // ItemShipDate
-            // 
-            this.ItemShipDate.Text = "Ship Date";
-            this.ItemShipDate.Width = 84;
-            //
             // 
             // InvoiceShipDate
             // 
@@ -183,15 +184,18 @@ namespace SEQB
             // 
             // lblTitle
             // 
+            this.lblTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTitle.AutoEllipsis = true;
             this.lblTitle.AutoSize = true;
             this.lblTitle.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTitle.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.lblTitle.Font = new System.Drawing.Font("Tahoma", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblTitle.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblTitle.Location = new System.Drawing.Point(24, 16);
+            this.lblTitle.Location = new System.Drawing.Point(938, 27);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(431, 42);
+            this.lblTitle.Size = new System.Drawing.Size(197, 42);
             this.lblTitle.TabIndex = 4;
-            this.lblTitle.Text = "QuickBooks integration";
+            this.lblTitle.Text = "INVOICES";
             // 
             // tabControl1
             // 
@@ -204,7 +208,7 @@ namespace SEQB
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1111, 738);
+            this.tabControl1.Size = new System.Drawing.Size(1152, 738);
             this.tabControl1.TabIndex = 16;
             // 
             // tabPage1
@@ -216,7 +220,7 @@ namespace SEQB
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(1103, 712);
+            this.tabPage1.Size = new System.Drawing.Size(1144, 712);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "View Shipped Inventories";
             // 
@@ -247,7 +251,7 @@ namespace SEQB
             this.groupBox1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(-4, -6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1108, 727);
+            this.groupBox1.Size = new System.Drawing.Size(1149, 727);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             // 
@@ -289,9 +293,9 @@ namespace SEQB
             this.lblPlant.Location = new System.Drawing.Point(17, 38);
             this.lblPlant.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPlant.Name = "lblPlant";
-            this.lblPlant.Size = new System.Drawing.Size(31, 13);
+            this.lblPlant.Size = new System.Drawing.Size(35, 13);
             this.lblPlant.TabIndex = 15;
-            this.lblPlant.Text = "Plant";
+            this.lblPlant.Text = "Plant:";
             // 
             // cbPlant
             // 
@@ -307,10 +311,11 @@ namespace SEQB
             // 
             this.lblAmountTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblAmountTitle.AutoSize = true;
-            this.lblAmountTitle.Location = new System.Drawing.Point(966, 689);
+            this.lblAmountTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmountTitle.Location = new System.Drawing.Point(981, 689);
             this.lblAmountTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAmountTitle.Name = "lblAmountTitle";
-            this.lblAmountTitle.Size = new System.Drawing.Size(58, 13);
+            this.lblAmountTitle.Size = new System.Drawing.Size(75, 18);
             this.lblAmountTitle.TabIndex = 8;
             this.lblAmountTitle.Text = "Amount: ";
             // 
@@ -318,10 +323,11 @@ namespace SEQB
             // 
             this.lblTaxTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTaxTitle.AutoSize = true;
-            this.lblTaxTitle.Location = new System.Drawing.Point(841, 689);
+            this.lblTaxTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTaxTitle.Location = new System.Drawing.Point(862, 689);
             this.lblTaxTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTaxTitle.Name = "lblTaxTitle";
-            this.lblTaxTitle.Size = new System.Drawing.Size(34, 13);
+            this.lblTaxTitle.Size = new System.Drawing.Size(45, 18);
             this.lblTaxTitle.TabIndex = 9;
             this.lblTaxTitle.Text = "Tax: ";
             // 
@@ -329,10 +335,11 @@ namespace SEQB
             // 
             this.lblQtyTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblQtyTitle.AutoSize = true;
-            this.lblQtyTitle.Location = new System.Drawing.Point(736, 689);
+            this.lblQtyTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblQtyTitle.Location = new System.Drawing.Point(757, 689);
             this.lblQtyTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblQtyTitle.Name = "lblQtyTitle";
-            this.lblQtyTitle.Size = new System.Drawing.Size(33, 13);
+            this.lblQtyTitle.Size = new System.Drawing.Size(44, 18);
             this.lblQtyTitle.TabIndex = 10;
             this.lblQtyTitle.Text = "Qty: ";
             // 
@@ -340,11 +347,11 @@ namespace SEQB
             // 
             this.lblQty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblQty.AutoSize = true;
-            this.lblQty.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblQty.Location = new System.Drawing.Point(773, 690);
+            this.lblQty.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblQty.Location = new System.Drawing.Point(806, 690);
             this.lblQty.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblQty.Name = "lblQty";
-            this.lblQty.Size = new System.Drawing.Size(13, 13);
+            this.lblQty.Size = new System.Drawing.Size(16, 18);
             this.lblQty.TabIndex = 11;
             this.lblQty.Text = "0";
             // 
@@ -352,11 +359,11 @@ namespace SEQB
             // 
             this.lblTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTax.AutoSize = true;
-            this.lblTax.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTax.Location = new System.Drawing.Point(879, 690);
+            this.lblTax.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTax.Location = new System.Drawing.Point(912, 690);
             this.lblTax.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTax.Name = "lblTax";
-            this.lblTax.Size = new System.Drawing.Size(35, 13);
+            this.lblTax.Size = new System.Drawing.Size(44, 18);
             this.lblTax.TabIndex = 12;
             this.lblTax.Text = "$0.00";
             // 
@@ -364,11 +371,11 @@ namespace SEQB
             // 
             this.lblAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblAmount.AutoSize = true;
-            this.lblAmount.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblAmount.Location = new System.Drawing.Point(1028, 690);
+            this.lblAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAmount.Location = new System.Drawing.Point(1061, 690);
             this.lblAmount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAmount.Name = "lblAmount";
-            this.lblAmount.Size = new System.Drawing.Size(35, 13);
+            this.lblAmount.Size = new System.Drawing.Size(44, 18);
             this.lblAmount.TabIndex = 13;
             this.lblAmount.Text = "$0.00";
             // 
@@ -397,7 +404,7 @@ namespace SEQB
             this.lvInventories.Location = new System.Drawing.Point(4, 76);
             this.lvInventories.Margin = new System.Windows.Forms.Padding(15, 32, 15, 32);
             this.lvInventories.Name = "lvInventories";
-            this.lvInventories.Size = new System.Drawing.Size(1103, 578);
+            this.lvInventories.Size = new System.Drawing.Size(1144, 578);
             this.lvInventories.TabIndex = 3;
             this.lvInventories.UseCompatibleStateImageBehavior = false;
             this.lvInventories.View = System.Windows.Forms.View.Details;
@@ -414,21 +421,21 @@ namespace SEQB
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblDate.Location = new System.Drawing.Point(447, 38);
+            this.lblDate.Location = new System.Drawing.Point(428, 38);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(55, 13);
+            this.lblDate.Size = new System.Drawing.Size(80, 13);
             this.lblDate.TabIndex = 5;
-            this.lblDate.Text = "Date from";
+            this.lblDate.Text = "Shipped:   from";
             // 
             // lblFamilyGroup
             // 
             this.lblFamilyGroup.AutoSize = true;
             this.lblFamilyGroup.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFamilyGroup.Location = new System.Drawing.Point(188, 37);
+            this.lblFamilyGroup.Location = new System.Drawing.Point(187, 37);
             this.lblFamilyGroup.Name = "lblFamilyGroup";
-            this.lblFamilyGroup.Size = new System.Drawing.Size(69, 13);
+            this.lblFamilyGroup.Size = new System.Drawing.Size(73, 13);
             this.lblFamilyGroup.TabIndex = 1;
-            this.lblFamilyGroup.Text = "Family Group";
+            this.lblFamilyGroup.Text = "Family Group:";
             // 
             // btnViewInventories
             // 
@@ -444,7 +451,7 @@ namespace SEQB
             // cbFamilyGroup
             // 
             this.cbFamilyGroup.FormattingEnabled = true;
-            this.cbFamilyGroup.Location = new System.Drawing.Point(265, 34);
+            this.cbFamilyGroup.Location = new System.Drawing.Point(263, 34);
             this.cbFamilyGroup.Name = "cbFamilyGroup";
             this.cbFamilyGroup.Size = new System.Drawing.Size(158, 21);
             this.cbFamilyGroup.TabIndex = 0;
@@ -512,18 +519,29 @@ namespace SEQB
             this.btnDeleteInvoice.UseVisualStyleBackColor = true;
             this.btnDeleteInvoice.Click += new System.EventHandler(this.btnDeleteInvoice_Click);
             // 
+            // pbLogo
+            // 
+            this.pbLogo.Image = ((System.Drawing.Image)(resources.GetObject("pbLogo.Image")));
+            this.pbLogo.Location = new System.Drawing.Point(0, 2);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(304, 80);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLogo.TabIndex = 17;
+            this.pbLogo.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1129, 864);
+            this.ClientSize = new System.Drawing.Size(1170, 864);
+            this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTitle);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(938, 495);
             this.Name = "MainForm";
-            this.Text = "Sample Express QuickBooks";
+            this.Text = "Sample Express";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResizeBegin += new System.EventHandler(this.MainForm_ResizeBegin);
@@ -535,6 +553,7 @@ namespace SEQB
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -605,6 +624,7 @@ namespace SEQB
         private Button btnDeleteInvoice;
         private Label lblDateTo;
         private DateTimePicker dtDateTo;
+        private PictureBox pbLogo;
     }
 }
 
