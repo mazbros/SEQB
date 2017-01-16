@@ -37,6 +37,7 @@ namespace SEQB
             this.InvoiceNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PartNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.FamilyGroup = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.InvoiceFamilyGroup = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Qty = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InvoiceQty = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -122,6 +123,12 @@ namespace SEQB
             this.Qty.Text = "Qty";
             this.Qty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Qty.Width = 56;
+            // 
+            // InvoiceFamilyGroup
+            // 
+            this.InvoiceFamilyGroup.Text = "Family Group";
+            this.InvoiceFamilyGroup.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.InvoiceFamilyGroup.Width = 97;
             // 
             // InvoiceQty
             // 
@@ -584,6 +591,7 @@ namespace SEQB
         private ColumnHeader Dummy;
 
         private ColumnHeader InvoiceNumber;
+        private ColumnHeader InvoiceFamilyGroup;
         private ColumnHeader InvoiceQty;
         private ColumnHeader InvoiceTax;
         private ColumnHeader InvoiceAmount;

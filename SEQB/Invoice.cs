@@ -8,5 +8,6 @@
         public double Tax { get; set; }
         public string ShipDate { get; set; }
         public string CreateDate { get; set; }
+        public string FamilyGroup { get; set; }
     }
 }

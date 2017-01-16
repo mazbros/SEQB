@@ -220,10 +220,12 @@ namespace SEQB
                     cmd.Parameters.Add(new SqlParameter("@TQty", DbType.Int16));
                     cmd.Parameters.Add(new SqlParameter("@TTax", SqlDbType.VarChar, 16));
                     cmd.Parameters.Add(new SqlParameter("@TAmount", SqlDbType.VarChar, 16));
+                    cmd.Parameters.Add(new SqlParameter("@FG", SqlDbType.NVarChar, 255));
                     cmd.Parameters["@ShipDate"].Direction = ParameterDirection.Output;
                     cmd.Parameters["@TQty"].Direction = ParameterDirection.Output;
                     cmd.Parameters["@TTax"].Direction = ParameterDirection.Output;
                     cmd.Parameters["@TAmount"].Direction = ParameterDirection.Output;
+                    cmd.Parameters["@FG"].Direction = ParameterDirection.Output;
 
                     cmd.Connection = conn;
                     cmd.ExecuteNonQuery();
@@ -233,10 +235,12 @@ namespace SEQB
                     invoice.Qty = int.Parse(cmd.Parameters["@TQty"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
                     invoice.Tax = double.Parse(cmd.Parameters["@TTax"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
                     invoice.Amount = double.Parse(cmd.Parameters["@TAmount"].Value.ToString(), CultureInfo.GetCultureInfo("en-US"));
+                    invoice.FamilyGroup = cmd.Parameters["@FG"].Value.ToString();
 
                     var item = new ListViewItem(invoice.InvoiceNumber) {Tag = invoice};
                     item.SubItems.Add(invoice.CreateDate.ToString(CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.ShipDate.ToString(CultureInfo.GetCultureInfo("en-US")));
+                    item.SubItems.Add(invoice.FamilyGroup);
                     item.SubItems.Add(invoice.Qty.ToString(CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Tax.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
                     item.SubItems.Add(invoice.Amount.ToString("C2", CultureInfo.GetCultureInfo("en-US")));
@@ -296,7 +300,7 @@ namespace SEQB
             SizeLastColumn(lvInventories);
 
             lvInvoices.View = View.Details;
-            lvInvoices.Columns.AddRange(new[] { InvoiceNumber, InvoiceCreateDate, InvoiceShipDate, InvoiceQty, InvoiceTax, InvoiceAmount, Dummy2 });
+            lvInvoices.Columns.AddRange(new[] { InvoiceNumber, InvoiceCreateDate, InvoiceShipDate, InvoiceFamilyGroup, InvoiceQty, InvoiceTax, InvoiceAmount, Dummy2 });
             SizeLastColumn(lvInvoices);
             FilllvInvoices();
         }

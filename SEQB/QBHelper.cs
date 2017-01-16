@@ -224,17 +224,20 @@ namespace SEQB
             var requestXML = requestMsgSet.ToXMLString();
             RaiseEvent(requestXML);
             //SaveXML(requestXML);
-            var responseXML = responseMsgSet.ToXMLString();
-            MessageBox.Show(responseXML);
-            // SaveXML(responseXML);
             */
+
+            //var responseXML = responseMsgSet.ToXMLString();
+            //RaiseEvent(responseXML);
+            // SaveXML(responseXML);
+            //*/
 
             var response = responseMsgSet.ResponseList.GetAt(0);
             var statusCode = response.StatusCode;
-            //var statusMessage = response.StatusMessage;
-            //var statusSeverity = response.StatusSeverity;
-            //RaiseEvent("Status:\nCode = " + statusCode + "\nMessage = " + statusMessage + "\nSeverity = " + statusSeverity);
-            
+            var statusMessage = response.StatusMessage;
+            var statusSeverity = response.StatusSeverity;
+
+            if (statusCode != 0)
+                RaiseEvent("Status Code:\n\t" + statusCode + "\nMessage:\n\t" + statusMessage + "\nSeverity:\n\t" + statusSeverity);
 
             if (statusCode == 0)
             {
