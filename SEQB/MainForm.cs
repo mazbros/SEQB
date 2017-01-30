@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Globalization;
 using QBFC13Lib;
 using System.Linq;
+using PresentationControls;
 
 namespace SEQB
 {
@@ -21,6 +22,7 @@ namespace SEQB
         private static readonly string NewLine = Environment.NewLine;
 
         private DataTable _dt;
+        private ListSelectionWrapper<DataRow>  _familyGroupDataSource;
 
         public MainForm()
         {
@@ -58,10 +60,17 @@ namespace SEQB
                 var dt = new DataTable();
                 new SqlDataAdapter(cmd).Fill(dt);
 
-                cbFamilyGroup.DataSource = dt;
-                cbFamilyGroup.ValueMember = "FamilyGroup";
-                cbFamilyGroup.DisplayMember = "FamilyGroup";
+                _familyGroupDataSource = new ListSelectionWrapper<DataRow>(dt.Rows, "FamilyGroup");
+                cbcbFamilyGroup.DataSource = _familyGroupDataSource;
+                cbcbFamilyGroup.DisplayMemberSingleItem = "Name";
+                cbcbFamilyGroup.DisplayMember = "NameConcatenated";
+                cbcbFamilyGroup.ValueMember = "Selected";
             }
+        }
+
+        private string GetFamilyGroupsFromControl()
+        {
+            return cbcbFamilyGroup.Text.Trim('"').Replace("\" & \"", ",");
         }
 
         private void FilllvInventories()
@@ -77,7 +86,7 @@ namespace SEQB
                 var plant = cbPlant.SelectedItem as Plant;
                 if (plant != null)
                     cmd.Parameters.Add(new SqlParameter("@plant_Id", plant.Id));
-                cmd.Parameters.Add(new SqlParameter("@FG", cbFamilyGroup.Text));
+                cmd.Parameters.Add(new SqlParameter("@FG", GetFamilyGroupsFromControl()));
                 cmd.Parameters.Add(new SqlParameter("@dateFrom", dtDateFrom.Value));
                 cmd.Parameters.Add(new SqlParameter("@dateTo", dtDateTo.Value));
                 cmd.Parameters.Add(new SqlParameter("@TQty", DbType.Int16));
@@ -141,7 +150,7 @@ namespace SEQB
                     {
                         while (reader.Read())
                         {
-                            ret.Add(new Invoice { InvoiceNumber = reader.GetInt32(0).ToString() });
+                            ret.Add(new Invoice { InvoiceNumber = reader.GetValue(0).ToString() });
                         }
                     }
                 }
@@ -327,7 +336,7 @@ namespace SEQB
              * TODO: implement a switch based on family group and/or family group combinations
              * TODO: Bob Glass to supply rules
             */  
-            var custFn = cbFamilyGroup.Text.Equals("TRUSLATE") ? "GAF MC TRUSLATE" : "GAF MC Steep Slope";
+            var custFn = cbcbFamilyGroup.Text.Contains("TRUSLATE") ? "GAF MC TRUSLATE" : "GAF MC Steep Slope";
 
             var billTo = GetBillTo(custFn);
 
@@ -705,7 +714,6 @@ namespace SEQB
         {
             btnDeleteInvoice.Enabled = lvInvoices.SelectedItems.Count > 0;
         }
-
     }
 
 }
