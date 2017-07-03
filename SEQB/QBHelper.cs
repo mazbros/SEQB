@@ -1,6 +1,7 @@
 ﻿using QBFC13Lib;
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace SEQB
 {
@@ -39,11 +40,17 @@ namespace SEQB
 
             // (4) Use IsErrorRecoveryInfo to check whether an unprocessed response exists. 
             //		If IsErrorRecoveryInfo is true:
-            if (sessionManager.IsErrorRecoveryInfo())
+            try
             {
-                ProcessQBFCErrors(sessionManager);
+                if (sessionManager.IsErrorRecoveryInfo())
+                {
+                    ProcessQBFCErrors(sessionManager);
+                }
             }
-
+            catch
+            {
+                //
+            }
         }
 
         private static void ProcessQBFCErrors(QBSessionManager sessionManager)
@@ -180,37 +187,45 @@ namespace SEQB
         // Code for handling different versions of QuickBooks
         private static double QBFCLatestVersion(QBSessionManager SessionManager)
         {
-            // Use oldest version to ensure that this application work with any QuickBooks (US)
-            IMsgSetRequest msgset = SessionManager.CreateMsgSetRequest("US", 1, 0);
-            msgset.AppendHostQueryRq();
-            IMsgSetResponse QueryResponse = SessionManager.DoRequests(msgset);
-            //MessageBox.Show("Host query = " + msgset.ToXMLString());
-            //SaveXML(msgset.ToXMLString());
-
-            // The response list contains only one response,
-            // which corresponds to our single HostQuery request
-            IResponse response = QueryResponse.ResponseList.GetAt(0);
-
-            // Please refer to QBFC Developers Guide for details on why 
-            // "as" clause was used to link this derrived class to its base class
-            var hostResponse = response.Detail as IHostRet;
             double lastVers = 0;
-
-            if (hostResponse != null)
+            try
             {
-                var supportedVersions = hostResponse.SupportedQBXMLVersionList;
+                // Use oldest version to ensure that this application work with any QuickBooks (US)
+                IMsgSetRequest msgset = SessionManager.CreateMsgSetRequest("US", 1, 0);
+                msgset.AppendHostQueryRq();
+                IMsgSetResponse QueryResponse = SessionManager.DoRequests(msgset);
+                //MessageBox.Show("Host query = " + msgset.ToXMLString());
+                //SaveXML(msgset.ToXMLString());
 
-                int i;
+                // The response list contains only one response,
+                // which corresponds to our single HostQuery request
+                IResponse response = QueryResponse.ResponseList.GetAt(0);
 
-                for (i = 0; i <= supportedVersions.Count - 1; i++)
+                // Please refer to QBFC Developers Guide for details on why 
+                // "as" clause was used to link this derrived class to its base class
+                var hostResponse = response.Detail as IHostRet;
+                
+
+                if (hostResponse != null)
                 {
-                    var svers = supportedVersions.GetAt(i);
-                    var vers = Convert.ToDouble(svers, CultureInfo.GetCultureInfo("en-US"));
-                    if (vers > lastVers)
+                    var supportedVersions = hostResponse.SupportedQBXMLVersionList;
+
+                    int i;
+
+                    for (i = 0; i <= supportedVersions.Count - 1; i++)
                     {
-                        lastVers = vers;
+                        var svers = supportedVersions.GetAt(i);
+                        var vers = Convert.ToDouble(svers, CultureInfo.GetCultureInfo("en-US"));
+                        if (vers > lastVers)
+                        {
+                            lastVers = vers;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                //
             }
             return lastVers;
         }

@@ -76,9 +76,11 @@ namespace SEQB
             this.btnViewInventories = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnGenerateProofOfShipment = new System.Windows.Forms.Button();
             this.lvInvoices = new System.Windows.Forms.ListView();
             this.btnDeleteInvoice = new System.Windows.Forms.Button();
             this.pbLogo = new System.Windows.Forms.PictureBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -475,9 +477,9 @@ namespace SEQB
             this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(1144, 712);
+            this.tabPage2.Size = new System.Drawing.Size(1159, 626);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Delete Open Invoices";
+            this.tabPage2.Text = "Open Invoices";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -486,14 +488,27 @@ namespace SEQB
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox2.Controls.Add(this.btnGenerateProofOfShipment);
             this.groupBox2.Controls.Add(this.lvInvoices);
             this.groupBox2.Controls.Add(this.btnDeleteInvoice);
             this.groupBox2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(0, -6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1104, 718);
+            this.groupBox2.Size = new System.Drawing.Size(1156, 629);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
+            // 
+            // btnGenerateProofOfShipment
+            // 
+            this.btnGenerateProofOfShipment.AutoSize = true;
+            this.btnGenerateProofOfShipment.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnGenerateProofOfShipment.Location = new System.Drawing.Point(161, 600);
+            this.btnGenerateProofOfShipment.Name = "btnGenerateProofOfShipment";
+            this.btnGenerateProofOfShipment.Size = new System.Drawing.Size(158, 23);
+            this.btnGenerateProofOfShipment.TabIndex = 20;
+            this.btnGenerateProofOfShipment.Text = "Generate proof of shipment";
+            this.btnGenerateProofOfShipment.UseVisualStyleBackColor = true;
+            this.btnGenerateProofOfShipment.Click += new System.EventHandler(this.btnGenerateProofOfShipment_Click);
             // 
             // lvInvoices
             // 
@@ -510,7 +525,7 @@ namespace SEQB
             this.lvInvoices.Location = new System.Drawing.Point(15, 76);
             this.lvInvoices.Margin = new System.Windows.Forms.Padding(15, 32, 15, 32);
             this.lvInvoices.Name = "lvInvoices";
-            this.lvInvoices.Size = new System.Drawing.Size(1075, 604);
+            this.lvInvoices.Size = new System.Drawing.Size(1127, 515);
             this.lvInvoices.TabIndex = 3;
             this.lvInvoices.UseCompatibleStateImageBehavior = false;
             this.lvInvoices.View = System.Windows.Forms.View.Details;
@@ -521,7 +536,7 @@ namespace SEQB
             this.btnDeleteInvoice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteInvoice.Enabled = false;
             this.btnDeleteInvoice.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnDeleteInvoice.Location = new System.Drawing.Point(29, 689);
+            this.btnDeleteInvoice.Location = new System.Drawing.Point(29, 600);
             this.btnDeleteInvoice.Name = "btnDeleteInvoice";
             this.btnDeleteInvoice.Size = new System.Drawing.Size(98, 23);
             this.btnDeleteInvoice.TabIndex = 4;
@@ -539,11 +554,24 @@ namespace SEQB
             this.pbLogo.TabIndex = 17;
             this.pbLogo.TabStop = false;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.progressBar1.Location = new System.Drawing.Point(373, 83);
+            this.progressBar1.MarqueeAnimationSpeed = 5;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(500, 14);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 18;
+            this.progressBar1.UseWaitCursor = true;
+            this.progressBar1.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 741);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.pbLogo);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTitle);
@@ -563,6 +591,7 @@ namespace SEQB
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -571,12 +600,13 @@ namespace SEQB
 
         private void TabPage2_Click1(object sender, EventArgs e)
         {
-            FilllvInvoices();
+            fillLvInvoices();
         }
 
         private void TabPage1_Click(object sender, EventArgs e)
         {
-            FilllvInventories();
+            //fillLvInventories();
+            btnViewInventories_Click(this, null);
         }
 
         
@@ -636,6 +666,8 @@ namespace SEQB
         private DateTimePicker dtDateTo;
         private PictureBox pbLogo;
         private PresentationControls.CheckBoxComboBox cbcbFamilyGroup;
+        private ProgressBar progressBar1;
+        private Button btnGenerateProofOfShipment;
     }
 }
 

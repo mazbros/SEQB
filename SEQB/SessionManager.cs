@@ -1,6 +1,7 @@
 ﻿using QBFC13Lib;
 using System;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace SEQB
 {
@@ -40,16 +41,25 @@ namespace SEQB
         /// <returns></returns>
         public QBSessionManager OpenSession()
         {
-            if (_booSessionBegun)
-                return null;
+            try
+            {
+                if (_booSessionBegun)
+                    return null;
 
-            QBFile = ConfigurationManager.AppSettings["QBFile"];
+                QBFile = ConfigurationManager.AppSettings["QBFile"];
 
-            _qbSessionManager.CloseConnection();
+                _qbSessionManager.CloseConnection();
 
-            _qbSessionManager.OpenConnection("SEQB", "Sample Express QuickBooks Integration");
-            _qbSessionManager.BeginSession(QBFile, ENOpenMode.omDontCare);
-            _booSessionBegun = true;
+                _qbSessionManager.OpenConnection("SEQB", "Sample Express QuickBooks Integration");
+                _qbSessionManager.BeginSession(QBFile, ENOpenMode.omDontCare);
+                _booSessionBegun = true;
+                //return _qbSessionManager;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(MainForm.ActiveForm, @"Please open QuickBooks prior to creating incoice.", @"QuickBooks Connection",
+                    MessageBoxButtons.OK , MessageBoxIcon.Exclamation);
+            }
             return _qbSessionManager;
         }
 
